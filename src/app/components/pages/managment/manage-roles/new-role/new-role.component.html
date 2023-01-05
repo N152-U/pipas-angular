@@ -1,0 +1,87 @@
+<div align="center">
+  <p-card
+    subheader="Registro role"
+    [style]="{ width: '30rem', 'margin-bottom': '2em', 'margin-top': '2em' }"
+    styleClass="p-card-shadow"
+  >
+    <form
+      (ngSubmit)="save(f)"
+      #f="ngForm"
+      [formGroup]="aFormGroup"
+      class="needs-validation center"
+      novalidate
+    >
+      <div class="form-row">
+        <div class="col-md-12 mb-3">
+          <label>Role</label>
+          <div class="input-group">
+            <input
+              [(ngModel)]="newRole.role"
+              id="role"
+              name="role"
+              type="text"
+              class="form-control"
+              formControlName="nameRole"
+              placeholder="Nombre del role"
+              [class]="{
+                'is-invalid':
+                  nameRole.invalid &&
+                  (nameRole.dirty ||
+                    nameRole.touched ||
+                    nameRole.errors.minlength),
+                'is-valid': aFormGroup.valid
+              }"
+            />
+            <div
+              *ngIf="nameRole.invalid && (nameRole.dirty || nameRole.touched)"
+              class="invalid-feedback"
+            >
+              <div *ngIf="nameRole.errors.required">
+                El campo es obligatorio
+              </div>
+              <div *ngIf="nameRole.errors.minlength">
+                El nombre debe ser de al menos 2 caracteres
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="row">Seleccione las opciones sobre las que tiene permisos <b>(al menos una)</b></div>
+        </div>
+
+
+          <div class="col s6">
+            
+          <input
+          type="checkbox"
+          class="form-control filled-in"
+          id="permission"
+          name="username"
+          checked="true"
+          *ngFor="let permission of permissions[0]" [value]="permission.id"
+          {{ permission.description }}
+        >
+         
+        
+      </div>
+        
+
+      </div>
+<br>
+      <p-button
+        type="submit"
+        label="Guardar"
+        icon="pi pi-check"
+        styleClass="p-button-sm p-button-success"
+        [disabled]="!aFormGroup.valid"
+      >
+      </p-button>
+      <p-button
+        [routerLink]="['/managment/manage-roles']"
+        label="Cancel"
+        icon="pi pi-times"
+        styleClass="p-button-sm p-button-danger"
+        [style]="{ 'margin-left': '.4em' }"
+      ></p-button>
+    </form>
+  </p-card>
+</div>

@@ -1,0 +1,90 @@
+<router-outlet></router-outlet>
+
+<div class="card centrar">
+  <div class="card-body">
+    <p-toolbar styleClass="p-mb-4">
+      <ng-template pTemplate="left">
+        <p-button styleClass="p-button-sm p-button-success" label="Nuevo Registro" 
+        routerLink="/delivery/delivery-register"
+        icon="pi pi-plus">
+        </p-button>
+      </ng-template>
+      <ng-template pTemplate="right">
+        
+      </ng-template>
+    </p-toolbar>
+    <br>
+    <p-table styleClass="p-datatable-sm p-datatable-striped p-datatable-responsive-demo" #dt1 [value]="DeliveryDate"
+      [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [scrollable]="true" dataKey="id"
+      scrollHeight="500px" [style]="{ width: '100%' }" [rowsPerPageOptions]="[10,25,50]">
+      <ng-template pTemplate="caption" align="center">
+        Viajes
+      </ng-template>
+      <ng-template pTemplate="header" let-rowData="rowData">
+        <tr>
+          <th pSortableColumn="promoter.firstNamed">Promotor<p-sortIcon></p-sortIcon>
+          </th>
+          <th pSortableColumn="pipero.firstName">Pipero<p-sortIcon></p-sortIcon>
+          </th>
+          <th pSortableColumn="tanker_truck.brand">Pipa<p-sortIcon></p-sortIcon>
+          </th>
+          <th pSortableColumn="round">Ronda <p-sortIcon></p-sortIcon>
+          </th>
+          <th pSortableColumn="date">Fecha <p-sortIcon></p-sortIcon>
+          </th>
+          <th>Acciones</th>
+        </tr>
+        <tr>
+          <th>
+            <input pInputText type="text" (input)="dt1.filter($event.target.value, 'promoter.firstName', 'contains')"
+              [value]="dt1.filters['promoter.firstName']?.value" placeholder="Busqueda por nombre"
+              class="p-column-filter p-inputtext-sm">
+          </th>
+          <th>
+            <input pInputText type="text" (input)="dt1.filter($event.target.value, 'pipero.firstName', 'contains')"
+              [value]="dt1.filters['pipero.firstName']?.value" placeholder="Busqueda por Apellido Paterno"
+              class="p-column-filter p-inputtext-sm">
+          </th>
+          <th>
+            <input pInputText type="text" (input)="dt1.filter($event.target.value, 'tanker_truck.brand', 'contains')"
+              [value]="dt1.filters['tanker_truck.brand']?.value" placeholder="Busqueda por Apellido Materno"
+              class="p-column-filter p-inputtext-sm">
+          </th>
+          <th>
+            <input pInputText type="text" (input)="dt1.filter($event.target.value, 'round', 'contains')"
+              [value]="dt1.filters['round']?.value" placeholder="Busqueda por Genero"
+              class="p-column-filter p-inputtext-sm">
+          </th>
+          <th>
+            <input pInputText type="text" (input)="dt1.filter($event.target.value, 'date', 'contains')"
+            [value]="dt1.filters['date']?.value" placeholder="Busqueda por Genero"
+            class="p-column-filter p-inputtext-sm">
+          </th>
+        </tr>
+   </ng-template>
+      <ng-template pTemplate="body" let-delivery>
+        <tr [pSelectableRow]="delivery">
+          <td>{{delivery.promoter.firstName}}</td>
+          <td>{{delivery.pipero.firstName}}</td>
+          <td>{{delivery.tanker_truck.brand}}</td>
+          <td>{{delivery.round}}</td>
+          <td>{{delivery.date}}</td>
+          <td>
+            <button pButton pRipple icon="pi pi-trash" class=" p-button-danger  p-mr-2"
+              (click)="DeleteDelivery(delivery, i)"></button>
+              &nbsp;
+              <button pButton pRipple icon="pi pi-plus" class=" p-button-warning p-mr-2"
+              [routerLink]="['/delivery-detail/delivery-detail-register', delivery.id]"></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="paginatorleft">
+  
+      </ng-template>
+      <ng-template pTemplate="paginatorright">
+      </ng-template>
+    </p-table>
+  </div>
+ 
+</div>

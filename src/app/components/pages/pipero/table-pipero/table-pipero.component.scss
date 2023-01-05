@@ -1,0 +1,75 @@
+h3 {
+    color: #56BA6A;
+}
+
+th {
+    text-align   : center;
+    align-items  : center;
+    align-content: center !important;
+
+}
+
+.centrar {
+    width       : 90%;
+    margin-left : auto;
+    margin-right: auto;
+    margin-top: 20px;
+    
+}
+
+#deleteColumn td {
+    text-align: center;
+}
+
+
+table>tbody>td.col-button {
+    text-align: center;
+}
+
+.col-button {
+    width     : 10%;
+    text-align: center;
+}
+
+td.col-button {
+    text-align: center;
+}
+
+.my-center-text {
+    text-align: center;
+  
+}
+
+@media screen and (max-width: 40rem) {
+    :host ::ng-deep {
+        .p-datatable {
+            &.p-datatable-responsive-demo {
+                .p-datatable-thead > tr > th,
+                .p-datatable-tfoot > tr > td {
+                    display: none !important;
+                }
+
+                .p-datatable-tbody > tr > td {
+                    text-align: left;
+                    display: block;
+                    width: 100%;
+                    float: left;
+                    clear: left;
+                    border: 0 none;
+
+                    .p-column-title {
+                        padding: .4rem;
+                        min-width: 30%;
+                        display: inline-block;
+                        margin: -.4em 1em -.4em -.4rem;
+                        font-weight: bold;
+                    }
+
+                    &:last-child {
+                        border-bottom: 1px solid var(--surface-d);
+                    }
+                }
+            }
+        }
+    }
+}

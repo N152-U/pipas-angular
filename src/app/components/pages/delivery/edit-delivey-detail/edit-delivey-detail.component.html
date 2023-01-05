@@ -1,0 +1,405 @@
+<div class="d-flex justify-content-center">
+    <div class="card" style="width: 70rem;">
+        <div class="card-body">
+            <h5 class="card-title text-center">Informacion del Viaje </h5>
+            <h6 class="card-subtitle mb-2 text-muted text-uppercase">No. de Folio: {{deliveryId}}</h6>
+            <form (ngSubmit)="UpdateDeliveryDetail()" #A="ngForm" class="needs-validation center"
+                [formGroup]="deliveryDetail">
+                <p-divider align="left" type="dashed">
+                    <b>Datos de la Personales del Solicitante</b>
+
+                    <input type=hidden id="id" name="id" formControlName="id">
+                    <input type=hidden id="deliveryId" name="deliveryId" formControlName="deliveryId">
+                </p-divider>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="firstName">Nombre(s) *</label>
+                        <input type="text" class="form-control" id="firstName" name="firstName"
+                            formControlName="firstName" placeholder="Nombre(s)" [ngClass]="{
+                                'is-invalid':
+                                firstName.invalid &&
+                                  (firstName.dirty ||
+                                  firstName.touched ||
+                                  firstName.errors.minlength),
+                                'is-valid': firstName.valid
+                              }">
+                        <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="firstName.errors.required">
+                                El campo es obligatorio
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="paternalSurname">Apellido Paterno * </label>
+                        <input type="text" class="form-control" id="paternalSurname" name="paternalSurname"
+                            formControlName="paternalSurname" placeholder="Apellido Paterno" [ngClass]="{
+                                'is-invalid':
+                                paternalSurname.invalid &&
+                                  (paternalSurname.dirty ||
+                                  paternalSurname.touched ||
+                                  paternalSurname.errors.minlength),
+                                'is-valid': paternalSurname.valid
+                              }">
+                        <div *ngIf="paternalSurname.invalid && (paternalSurname.dirty || paternalSurname.touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="paternalSurname.errors.required">
+                                El campo es obligatorio
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="maternalSurname">Apellido Materno *</label>
+                        <input type="text" class="form-control" id="maternalSurname" name="maternalSurname"
+                            formControlName="maternalSurname" placeholder="Apellido Materno" [ngClass]="{
+                                'is-invalid':
+                                maternalSurname.invalid &&
+                                  (maternalSurname.dirty ||
+                                  maternalSurname.touched ||
+                                  maternalSurname.errors.minlength),
+                                'is-valid': maternalSurname.valid
+                              }">
+                        <div *ngIf="maternalSurname.invalid && (maternalSurname.dirty || maternalSurname.touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="maternalSurname.errors.required">
+                                El campo es obligatorio
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="email">Email *</label>
+                        <input type="email" class="form-control" id="email" name="email" formControlName="email"
+                            placeholder="Email" [ngClass]="{
+                                'is-invalid':
+                                email.invalid &&
+                                  (email.dirty ||
+                                  email.touched ||
+                                  email.errors.minlength),
+                                'is-valid': email.valid
+                              }">
+                        <div *ngIf="email.invalid && (email.dirty || email.touched)" class="invalid-feedback">
+                            <div *ngIf="email.errors.required">
+                                El campo es obligatorio
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="phoneNumber">Telefono *</label>
+                        <input maxlength="10"
+                            oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                            type="text" class="form-control" id="phoneNumber" name="phoneNumber"
+                            formControlName="phoneNumber" placeholder="Telefono" [ngClass]="{
+                                'is-invalid':
+                                phoneNumber.invalid &&
+                                  (phoneNumber.dirty ||
+                                  phoneNumber.touched ||
+                                  phoneNumber.errors.minlength),
+                                'is-valid': phoneNumber.valid
+                              }">
+                        <div *ngIf="phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="phoneNumber.errors.required">
+                                El campo es obligatorio
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="gender">Género *</label>
+                        <p-dropdown #ddgenders [options]="genders" [style]="{ width: '100%' }" scrollHeight="400px"
+                            id="gender" formControlName="gender" optionLabel="name" [filter]="true" filterBy="name"
+                            name="gender" [showClear]="true" placeholder="Seleccione Genero" 
+                            (onChange)="genderChanged()" [ngClass]="{
+                                'is-invalid':
+                                gender.invalid &&
+                                  (gender.dirty ||
+                                  gender.touched ||
+                                  gender.errors.minlength),
+                                'is-valid': gender.valid
+                              }">
+                            <ng-template let-item pTemplate="selectedGender">
+                                <div class="gender gender-item-value" *ngIf="selectedGender">
+
+                                    <div>{{ selectedGender }}</div>
+                                </div>
+                            </ng-template>
+                            <ng-template let-gender pTemplate="gender">
+                                <div class="gender-item">
+                                    <div>{{ gender.name }}</div>
+                                </div>
+                            </ng-template>
+                        </p-dropdown>
+
+
+
+                        <div *ngIf="gender.invalid && (gender.dirty || gender.touched)" class="invalid-feedback">
+                            <div *ngIf="gender.errors.required">
+                                El campo es obligatorio
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <p-divider align="left" type="dashed">
+                    <b>Datos de la Entrega</b>
+                </p-divider>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="litersOfWater">Litros *</label>
+                        <input type="number" class="form-control" id="litersOfWater" name="litersOfWater"
+                            formControlName="litersOfWater" placeholder=" L" [ngClass]="{
+                                'is-invalid':
+                                litersOfWater.invalid &&
+                                  (litersOfWater.dirty ||
+                                  litersOfWater.touched ||
+                                  litersOfWater.errors.minlength),
+                                'is-valid': litersOfWater.valid
+                              }">
+                        <div *ngIf="litersOfWater.invalid && (litersOfWater.dirty || litersOfWater.touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="litersOfWater.errors.required">
+                                El campo es obligatorio
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="numberOfFamiliesServed">No. de Familias*</label>
+                        <input type="number" class="form-control" id="numberOfFamiliesServed"
+                            name="numberOfFamiliesServed" formControlName="numberOfFamiliesServed"
+                            placeholder="No. de Familias" [ngClass]="{
+                                'is-invalid':
+                                numberOfFamiliesServed.invalid &&
+                                  (numberOfFamiliesServed.dirty ||
+                                  numberOfFamiliesServed.touched ||
+                                  numberOfFamiliesServed.errors.minlength),
+                                'is-valid': numberOfFamiliesServed.valid
+                              }">
+                        <div *ngIf="numberOfFamiliesServed.invalid && (numberOfFamiliesServed.dirty || numberOfFamiliesServed.touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="numberOfFamiliesServed.errors.required">
+                                El campo es obligatorio
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="numberOfPeopleServed">No. de Personas Atendidas *</label>
+                        <input type="number" class="form-control" id="numberOfPeopleServed" name="numberOfPeopleServed"
+                            formControlName="numberOfPeopleServed" placeholder="No. de Personas Atendidas" [ngClass]="{
+                                'is-invalid':
+                                numberOfPeopleServed.invalid &&
+                                  (numberOfPeopleServed.dirty ||
+                                  numberOfPeopleServed.touched ||
+                                  numberOfPeopleServed.errors.minlength),
+                                'is-valid': numberOfPeopleServed.valid
+                              }">
+                        <div *ngIf="numberOfPeopleServed.invalid && (numberOfPeopleServed.dirty || numberOfPeopleServed.touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="numberOfPeopleServed.errors.required">
+                                El campo es obligatorio
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <p-divider align="left" type="dashed">
+                    <b>Direccion de Entrega</b>
+                </p-divider>
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label>Alcaldia</label>
+                        <p-dropdown #ddmunicipalities [options]="municipalities" [style]="{ width: '100%' }"
+                            scrollHeight="400px" id="municipalityId" formControlName="municipalityId"
+                            optionLabel="municipality" [filter]="true" filterBy="municipality" name="municipalityId"
+                            [showClear]="true" placeholder="Seleccione Alcaldia" (onChange)="municipalityChanged()"
+                            [ngClass]="{
+                                'is-invalid':
+                                municipalityId.invalid &&
+                                  (municipalityId.dirty ||
+                                  municipalityId.touched ||
+                                  municipalityId.errors.minlength),
+                                'is-valid': municipalityId.valid
+                              }">
+                            <ng-template let-item pTemplate="selectedMunicipality">
+                                <div class="municipality-municipality municipality-item-value"
+                                    *ngIf="selectedMunicipality">
+                                    <!--  <img
+                              src=""
+                              [class]="
+                                'municipality municipality-' + selectedMunicipality.id
+                              "
+                            /> -->
+                                    <div>{{ selectedMunicipality }}</div>
+                                </div>
+                            </ng-template>
+                            <ng-template let-municipality pTemplate="municipality">
+                                <div class="municipality-item">
+                                    <div>{{ municipality.municipality }}</div>
+                                </div>
+                            </ng-template>
+                        </p-dropdown>
+                        <div *ngIf="municipalityId.invalid && (municipalityId.dirty || municipalityId.touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="municipalityId.errors.required">
+                                El campo es obligatorio
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label>Colonia *</label>
+                        <p-dropdown #ddsettlements [options]="settlements" [style]="{ width: '100%' }"
+                            scrollHeight="400px" optionLabel="d_asenta" [filter]="true" filterBy="d_asenta"
+                            name="settlementId" [showClear]="true" placeholder="Seleccione colonia"
+                            formControlName="settlementId" (onChange)="settlementChanged()" [ngClass]="{
+                                'is-invalid':
+                                settlementId.invalid &&
+                                  (settlementId.dirty ||
+                                  settlementId.touched ||
+                                  settlementId.errors.minlength),
+                                'is-valid': settlementId.valid
+                              }">
+                            <ng-template let-item pTemplate="selectedSettlement">
+                                <div class="settlement-settlement municipality-item-value" *ngIf="selectedSettlement">
+                                    <!--  <img
+                              src=""
+                              [class]="
+                                'municipality municipality-' + selectedMunicipality.id
+                              "
+                            /> -->
+                                    <div>{{ selectedSettlement }}</div>
+                                </div>
+                            </ng-template>
+                            <ng-template let-settlement pTemplate="settlement">
+                                <div class="settlement-item">
+                                    <div>{{ settlement.d_asenta }}</div>
+                                </div>
+                            </ng-template>
+                        </p-dropdown>
+                        <div *ngIf="settlementId.invalid && (settlementId.dirty || settlementId.touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="settlementId.errors.required">
+                                El campo es obligatorio
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label for="zipcode">Codigo Postal *</label>
+                        <input autocomplete="disabled" (keyup)="zipCodeChanged()" type="text" class="form-control"
+                            id="zipcode" name="zipcode" formControlName="zipcode" placeholder="Codigo Postal" [ngClass]="{
+                                'is-invalid':
+                                zipcode.invalid &&
+                                  (zipcode.dirty ||
+                                  zipcode.touched ||
+                                  zipcode.errors.minlength),
+                                'is-valid': zipcode.valid
+                              }">
+                        <div *ngIf="zipcode.invalid && (zipcode.dirty || zipcode.touched)" class="invalid-feedback">
+                            <div *ngIf="zipcode.errors.required">
+                                El campo es obligatorio
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="street">Calle *</label>
+                        <input type="text" class="form-control" id="street" name="street" formControlName="street"
+                            placeholder="Calle" [ngClass]="{
+                                'is-invalid':
+                                street.invalid &&
+                                  (street.dirty ||
+                                  street.touched ||
+                                  street.errors.minlength),
+                                'is-valid': street.valid
+                              }">
+                        <div *ngIf="street.invalid && (street.dirty || street.touched)" class="invalid-feedback">
+                            <div *ngIf="street.errors.required">
+                                El campo es obligatorio
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="block">Manzana </label>
+                        <input type="text" class="form-control" id="block" name="block" formControlName="block"
+                            placeholder="Manzana" >
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="lot">Lote</label>
+                        <input type="text" class="form-control" id="lot" name="lot" formControlName="lot"
+                            placeholder="Lote" >
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="externalNumber">No. Exterior *</label>
+                        <input type="text" class="form-control" id="externalNumber" name="externalNumber"
+                            formControlName="externalNumber" placeholder="No. Exterior" [ngClass]="{
+                                'is-invalid':
+                                externalNumber.invalid &&
+                                  (externalNumber.dirty ||
+                                  externalNumber.touched ||
+                                  externalNumber.errors.minlength),
+                                'is-valid': externalNumber.valid &&
+                                (externalNumber.dirty ||
+                                externalNumber.touched)
+                              }">
+                        <div *ngIf="externalNumber.invalid && (externalNumber.dirty || externalNumber.touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="externalNumber.errors.required">
+                                El campo es obligatorio
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="internalNumber">No. Interior </label>
+                        <input type="text" class="form-control" id="internalNumber" formControlName="internalNumber"
+                            name="internalNumber" placeholder="No. Interior" >
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label for="corner">Esquina</label>
+                        <input type="text" class="form-control" id="corner" name="corner" formControlName="corner"
+                            placeholder="Esquina" >
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="btwFirstStreet">Primera Calle </label>
+                        <input type="text" class="form-control" id="btwFirstStreet" name="btwFirstStreet"
+                            formControlName="btwFirstStreet" placeholder="Primera Calle" >
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="btwSecondStreet">Segunda Calle </label>
+                        <input type="text" class="form-control" id="btwSecondStreet" name="btwSecondStreet"
+                            formControlName="btwSecondStreet" placeholder="Segunda Calle" >
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <label for="reference">Referencias</label>
+                        <textarea id="reference" name="reference" formControlName="reference" class="form-control"
+                            placeholder="Referencias" id="floatingTextarea2" style="height: 100px" ></textarea>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <label for="observation">Comentarios </label>
+                        <textarea id="observation" name="observation" formControlName="observation" class="form-control"
+                            placeholder="Comentarios" id="floatingTextarea2" style="height: 100px" ></textarea>
+                    </div>
+                </div>
+                <br>
+                <p-button type="submit" label="Guardar" icon="pi pi-check" styleClass="p-button-sm p-button-success">
+                </p-button>
+                &nbsp;
+                <p-button [routerLink]="['/home']" label="Cancel" icon="pi pi-times"
+                    styleClass="p-button-sm p-button-danger"></p-button>
+            </form>
+        </div>
+    </div>
+</div>

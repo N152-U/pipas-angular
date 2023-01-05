@@ -1,0 +1,38 @@
+.login-content {
+    width      : 500px;
+    max-width  : 100% !important;
+    min-height : 100%;
+    min-height : 56vh;
+    /* display : flex; */
+    align-items: center;
+    margin     : 16vh 0vh;
+    margin-top: 65px;
+    margin-bottom: 0px;
+}
+
+.pane {
+    background-color  : #fff;
+    -webkit-transition: background-color .7s;
+    transition        : background-color .7s;
+    -webkit-box-shadow: 0 0 8px #ddd;
+    box-shadow        : 0 0 8px #ddd;
+    margin-bottom     : 28px;
+    border-radius     : 7px;
+    position          : relative;
+    padding           : 40px;
+}
+
+.row{
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+.alert-danger{
+color: #721c24;
+background: #f8d7da;
+border-color: #f5c6cb;
+margin: 5px;
+}
+.container-error-message{
+    padding: 3px;
+}

@@ -1,0 +1,300 @@
+
+<router-outlet></router-outlet>
+
+<div align="center">
+  <p-card
+    subheader="Registro de usuarios "
+    [style]="{ width: '40rem', 'margin-bottom': '2em', 'margin-top': '2em' }"
+    styleClass="p-card-shadow"
+  >
+    <form
+      (ngSubmit)="save(f)"
+      #f="ngForm"
+      [formGroup]="aFormGroup"
+      class="needs-validation center"
+      novalidate
+    >
+      <div class="form-row">
+        <div class="col-md-6 mb-3">
+          <label>Role*</label>
+          <div class="input-group mb-3">
+            <select
+              id="roleId"
+              class="custom-select"
+              id="inputGroupSelect01"
+              [(ngModel)]="newUser.roleId"
+              name="roleId"
+              formControlName="roleId"
+              [class]="{
+                'is-invalid':
+                  roleId.invalid && (roleId.dirty || roleId.touched),
+                'is-valid': roleId.valid
+              }"
+            >
+              <option *ngFor="let role of roles[0]" [value]="role.id">
+                {{ role.role }}
+              </option>
+            </select>
+            <div
+              *ngIf="roleId.invalid && (roleId.dirty || roleId.touched)"
+              class="invalid-feedback"
+            >
+              <div *ngIf="roleId.errors.required">El campo es obligatorio</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label>Usuario*</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Usuario"
+            [(ngModel)]="newUser.username"
+            id="username"
+            name="username"
+            formControlName="username"
+            [class]="{
+              'is-invalid':
+                username.invalid &&
+                (username.dirty ||
+                  username.touched ||
+                  username.errors.minlength ||
+                  username.errors.maxlength),
+              'is-valid': username.valid
+            }"
+          />
+          <div
+            *ngIf="username.invalid && (username.dirty || username.touched)"
+            class="invalid-feedback"
+          >
+            <div *ngIf="username.errors.required">El campo es obligatorio</div>
+            <div *ngIf="username.errors.minlength">
+              El usuario debe ser de al menos 4 caracteres
+            </div>
+            <div *ngIf="username.errors.maxlength">
+              El usuario máximo debe tener 15 caracteres
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label>Nombre*</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Nombre"
+            [(ngModel)]="newUser.firstName"
+            id="firstName"
+            name="firstName"
+            formControlName="firstName"
+            [class]="{
+              'is-invalid':
+                firstName.invalid &&
+                (firstName.dirty ||
+                  firstName.touched ||
+                  firstName.errors.minlength ||
+                  firstName.errors.maxlength),
+              'is-valid': firstName.valid
+            }"
+          />
+          <div
+            *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)"
+            class="invalid-feedback"
+          >
+            <div *ngIf="firstName.errors.required">El campo es obligatorio</div>
+            <div *ngIf="firstName.errors.minlength">
+              El usuario debe ser de al menos 4 caracteres
+            </div>
+            <div *ngIf="firstName.errors.maxlength">
+              El usuario máximo debe tener 20 caracteres
+            </div>
+            <div *ngIf="firstName.errors.pattern">
+              El usuario solo debe contener letras
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label>Apellido paterno*</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Apellido paterno"
+            [(ngModel)]="newUser.middleName"
+            id="middleName"
+            name="middleName"
+            formControlName="middleName"
+            [class]="{
+              'is-invalid':
+                middleName.invalid &&
+                (middleName.dirty ||
+                  middleName.touched ||
+                  middleName.errors.minlength ||
+                  middleName.errors.maxlength),
+              'is-valid': middleName.valid
+            }"
+          />
+          <div
+            *ngIf="middleName.invalid && (middleName.dirty || middleName.touched)"
+            class="invalid-feedback"
+          >
+            <div *ngIf="middleName.errors.required">
+              El campo es obligatorio
+            </div>
+            <div *ngIf="middleName.errors.minlength">
+              El usuario debe ser de al menos 4 caracteres
+            </div>
+            <div *ngIf="middleName.errors.maxlength">
+              El usuario máximo debe tener 20 caracteres
+            </div>
+            <div *ngIf="middleName.errors.pattern">
+              El usuario solo debe contener letras
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 mb-3">
+          <div class="col-md-6 mb-3">
+            <label>Apellido materno*</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Apellido materno"
+              [(ngModel)]="newUser.lastName"
+              id="lastName"
+              name="lastName"
+              formControlName="lastName"
+              [class]="{
+                'is-invalid':
+                  lastName.invalid &&
+                  (lastName.dirty ||
+                    lastName.touched ||
+                    lastName.errors.minlength ||
+                    lastName.errors.maxlength),
+                'is-valid': lastName.valid
+              }"
+            />
+            <div
+              *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)"
+              class="invalid-feedback"
+            >
+              <div *ngIf="lastName.errors.required">
+                El campo es obligatorio
+              </div>
+              <div *ngIf="lastName.errors.minlength">
+                El usuario debe ser de al menos 4 caracteres
+              </div>
+              <div *ngIf="lastName.errors.maxlength">
+                El usuario máximo debe tener 20 caracteres
+              </div>
+              <div *ngIf="lastName.errors.pattern">
+                El usuario solo debe contener letras
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label>Contraseña*</label>
+            <input
+              type="password"
+              class="form-control"
+              placeholder="Contraseña"
+              [(ngModel)]="newUser.password"
+              id="password"
+              name="password"
+              formControlName="password"
+              [class]="{
+                'is-invalid':
+                  password.invalid &&
+                  (password.dirty ||
+                    password.touched ||
+                    password.errors.minlength ||
+                    password.errors.maxlength),
+                'is-valid': password.valid
+              }"
+            />
+
+          <div
+            *ngIf="password.invalid && (password.dirty || password.touched)"
+            class="invalid-feedback"
+          >
+            <div *ngIf="password.errors.required">El campo es obligatorio</div>
+            <div *ngIf="password.errors.minlength">
+              La contraseña debe ser de al menos 8 caracteres
+            </div>
+            <div *ngIf="password.errors.maxlength">
+              La contraseña máximo debe tener 15 caracteres
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label>Confirmar contraseña*</label>
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Repite la contraseña"
+            id="confirmation"
+            name="confirmation"
+            formControlName="confirmation"
+            [class]="{
+              'is-invalid':
+              confirmation.invalid &&
+                (confirmation.dirty ||
+                  confirmation.touched ||
+                  confirmation.errors.minlength ||
+                  confirmation.errors.maxlength),
+              'is-valid': confirmation.valid
+            }"
+          />
+          <div
+            *ngIf="
+              confirmation.invalid &&
+              (confirmation.dirty || confirmation.touched)
+            "
+            class="invalid-feedback"
+          >
+            <div *ngIf="confirmation.errors.required">
+              El campo es obligatorio
+            </div>
+            <div *ngIf="confirmation.errors.minlength">
+              La contraseña debe ser de al menos 8 caracteres
+            </div>
+            <div *ngIf="confirmation.errors.maxlength">
+              La contraseña máximo debe tener 15 caracteres
+            </div>
+          </div>
+
+        <!--   <div class="form-group form-check col-md-6 mb-3">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1" />
+            <label
+              class="form-check-label"
+              for="exampleCheck1"
+             
+              >Mostrar contraseña</label
+            >
+          </div> -->
+        </div>
+
+     
+      </div>
+
+      <p-button
+        type="submit"
+        label="Guardar"
+        icon="pi pi-check"
+        styleClass="p-button-sm p-button-success"
+        [disabled]="!aFormGroup.valid"
+      >
+      </p-button>
+      <p-button
+        [routerLink]="['/managment/manage-users']"
+        label="Cancel"
+        icon="pi pi-times"
+        styleClass="p-button-sm p-button-danger"
+        [style]="{ 'margin-left': '.4em' }"
+      ></p-button>
+    </form>
+  </p-card>
+</div>

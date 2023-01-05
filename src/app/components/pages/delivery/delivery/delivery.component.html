@@ -1,0 +1,178 @@
+<div class="d-flex justify-content-center">
+  <p-card [style]="{ width: '40rem', 'margin-bottom': '2em', 'margin-top': '2em' }" styleClass="p-card-shadow">
+    <h5 class="card-title text-center">Registro de Viaje </h5>
+    <br>
+    <form (ngSubmit)="onSubmit()" class="needs-validation center" novalidate [formGroup]="formDelivery">
+      <div class="form-row">
+        <div class="col-md-6 mb-3">
+          <label for="promoterId">Promotor*</label>
+          <div class="input-group mb-6">
+
+            <p-dropdown #ddpromoters id="promoterId" [options]="promoters" [style]="{ width: '100%' }"
+              scrollHeight="400px" formControlName="promoterId" name="promoterId" optionLabel="firstName"
+              [filter]="true" filterBy="firstName" filterBy="paternalSurname" filterBy="maternalSurname"
+              [showClear]="true" placeholder="Seleccione Promotor" (onChange)="promoterChanged()"  
+              [ngClass]="{
+                'is-invalid':
+                promoterId.invalid &&
+                  (promoterId.dirty ||
+                  promoterId.touched ||
+                  promoterId.errors.minlength),
+                'is-valid': promoterId.valid
+              }">
+              <ng-template let-item pTemplate="selectedGender">
+                <div class="gender gender-item-value" *ngIf="selectedPromoter">
+
+                  <div>{{ selectedPromoter }}</div>
+                </div>
+              </ng-template>
+              <ng-template let-promoter pTemplate="gender">
+                <div class="gender-item">
+                  <div>{{ promoter.firstName }} {{ promoter.paternalSurname }} {{ promoter.maternalSurname }}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+
+            <div *ngIf="promoterId.invalid && (promoterId.dirty || promoterId.touched)" class="invalid-feedback">
+              <div *ngIf="promoterId.errors.required">
+                El campo es obligatorio
+              </div>
+             
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="piperoId">Pipero*</label>
+          <div class="input-group mb-6">
+
+            <p-dropdown #ddpiperos id="piperoId" [options]="piperos" [style]="{ width: '100%' }" scrollHeight="400px"
+              formControlName="piperoId" name="piperoId" optionLabel="firstName" [filter]="true" filterBy="firstName"
+              filterBy="paternalSurname" filterBy="maternalSurname" [showClear]="true" placeholder="Seleccione Pipero"
+              (onChange)="piperoChanged()"
+              [ngClass]="{
+                'is-invalid':
+                piperoId.invalid &&
+                  (piperoId.dirty ||
+                  piperoId.touched ||
+                  piperoId.errors.minlength),
+                'is-valid': piperoId.valid
+              }">
+              <!-- https://www.linkedin.com/pulse/how-use-primeng-dropdown-templates-custom-data-stephan-janssen -->
+              <ng-template let-item pTemplate="item">
+                <div>{{ item.value.firstName }} {{ item.value.paternalSurname }} {{ item.value.maternalSurname }}</div>
+              </ng-template>
+              <ng-template let-item pTemplate="selectedPipero">
+                <div class="pipero pipero-item-value" *ngIf="selectedPipero">
+
+                  <div>{{ item.value.firstName }} {{ item.value.paternalSurname }} {{ item.value.maternalSurname }}
+                  </div>
+                </div>
+              </ng-template>
+              <ng-template let-pipero pTemplate="pipero">
+                <div class="pipero-item">
+                  <div>{{ pipero.firstName }} {{ pipero.paternalSurname }} {{ pipero.maternalSurname }}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+            <div *ngIf="piperoId.invalid && (piperoId.dirty || piperoId.touched)" class="invalid-feedback">
+              <div *ngIf="piperoId.errors.required">
+                El campo es obligatorio
+              </div>
+             
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-6 mb-3">
+          <label for="tankerTruckId">Pipa*</label>
+          <div class="input-group mb-6">
+
+
+            <p-dropdown #ddtankertruck id="tankerTruckId" [options]="tankerTrucks"
+              [style]="{ width: '100% !important', minWidth:'100%'}" scrollHeight="400px" name="tankerTruckId"
+              formControlName="tankerTruckId" optionLabel="placa" [filter]="true" filterBy="brand" filterBy="placa"
+              [showClear]="true" placeholder="Seleccione Pipa" (onChange)="piperoChanged()"
+              [ngClass]="{
+                'is-invalid':
+                tankerTruckId.invalid &&
+                  (tankerTruckId.dirty ||
+                  tankerTruckId.touched ||
+                  tankerTruckId.errors.minlength),
+                'is-valid': tankerTruckId.valid
+              }">
+              <ng-template let-item pTemplate="selectedTankerTruck">
+                <div class="tankerTruck tankerTruck-item-value" *ngIf="selectedTankerTruck">
+
+                  <div>{{ selectedTankerTruck }}</div>
+                </div>
+              </ng-template>
+              <ng-template let-tankerTruck pTemplate="tankerTruck">
+                <div class="tankerTruck-item">
+                  <div>{{ tankerTruck.placa }} {{tankerTruck.brand}} </div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+            <div *ngIf="tankerTruckId.invalid && (tankerTruckId.dirty || tankerTruckId.touched)" class="invalid-feedback">
+              <div *ngIf="tankerTruckId.errors.required">
+                El campo es obligatorio
+              </div>
+             
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="capacity">Capacidad(ℒ)</label>
+          <div class="input-group">
+            <input type="text" class="form-control" id="capacity" name="capacity" placeholder="Capacidad"
+              aria-describedby="inputGroupPrepend" formControlName="capacity"
+              [ngClass]="{
+                'is-invalid':
+                capacity.invalid &&
+                  (capacity.dirty ||
+                  capacity.touched ||
+                  capacity.errors.minlength),
+                'is-valid': capacity.valid
+              }"
+              required />
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroupPrepend">ℒ</span>
+            </div>
+            <div *ngIf="capacity.invalid && (capacity.dirty || capacity.touched)" class="invalid-feedback">
+              <div *ngIf="capacity.errors.required">
+                El campo es obligatorio
+              </div>
+             
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="date">Fecha *</label>
+          <div class="input-group">
+            <input type="date" class="form-control" id="date" name="date" placeholder="Capacidad"
+              aria-describedby="inputGroupPrepend" formControlName="date" required 
+              [ngClass]="{
+                'is-invalid':
+                date.invalid &&
+                  (date.dirty ||
+                  date.touched ||
+                  date.errors.minlength),
+                'is-valid': date.valid
+              }"/>
+            
+            <div *ngIf="date.invalid && (date.dirty || date.touched)" class="invalid-feedback">
+              <div *ngIf="date.errors.required">
+                El campo es obligatorio
+              </div>
+             
+            </div>
+          </div>
+        </div>
+      </div>
+      <p-button type="submit" label="Guardar" icon="pi pi-check" styleClass="p-button-sm p-button-success">
+      </p-button>
+      <p-button [routerLink]="['/home']" label="Cancel" icon="pi pi-times" styleClass="p-button-sm p-button-danger"
+        [style]="{ 'margin-left': '.4em' }"></p-button>
+    </form>
+  </p-card>
+</div>

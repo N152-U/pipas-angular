@@ -1,0 +1,27 @@
+<router-outlet></router-outlet>
+
+<div class="container">
+  <div class="row text-right">
+    <div class="col">
+      <button class="btn btn-danger" [routerLink]="['/manage-roles']">
+        <i class="fa fa-arrow-left"></i>
+        Regresar
+      </button>
+    </div>
+  </div>
+
+  <form (ngSubmit)="updateRole(f)" #f="ngForm">
+    <div class="col">
+      <label>Role</label>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Nombre del rol"
+        [(ngModel)]="editRole[0][0].role"
+        name="role"
+      />
+    </div>
+    <br /><br />
+    <button type="submit" class="btn btn-success">Guardar</button>
+  </form>
+</div>

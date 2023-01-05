@@ -1,0 +1,96 @@
+<router-outlet></router-outlet>
+
+<!--   tabla de primeng -->
+
+  <div *ngIf="router.url == '/tankertruck'" class="card centrar">
+    <div class="card-body">
+
+      <p-toolbar styleClass="p-mb-4">
+        <ng-template pTemplate="left">
+          <p-button styleClass="p-button-sm p-button-success" label="Nuevo Registro" icon="pi pi-plus"
+          [routerLink]="['save-tankertruck']"></p-button>
+        </ng-template>
+        <ng-template pTemplate="right">
+          <p-button styleClass="p-button-sm" label="Inicio"></p-button>
+        </ng-template>
+      </p-toolbar>
+      <br>
+      <p-table styleClass="p-datatable-sm p-datatable-striped p-datatable-responsive-demo" #dt1
+        [value]="TankerTruckDate" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [scrollable]="true" dataKey="id"
+        scrollHeight="500px" [style]="{ width: '100%' }" [rowsPerPageOptions]="[10,25,50]">
+        <ng-template pTemplate="caption" align="center">
+          Pipas
+        </ng-template>
+        <ng-template pTemplate="header" let-rowData="rowData">
+  
+          <tr>
+            <th pSortableColumn="brand">Placa <p-sortIcon></p-sortIcon>
+            </th>
+            <th pSortableColumn="model">Modelo<p-sortIcon></p-sortIcon>
+            </th>
+            <th pSortableColumn="placa">Placa<p-sortIcon></p-sortIcon>
+            </th>
+            <th pSortableColumn="eco">No. Economico<p-sortIcon></p-sortIcon>
+            </th>
+            <th pSortableColumn="capacity">Capacidad (Litros)<p-sortIcon></p-sortIcon>
+            </th>
+            <th>Acciones</th>
+          </tr>
+  
+          <tr>
+            <th>
+              <input pInputText type="text" (input)="dt1.filter($event.target.value, 'brand', 'contains')"
+                [value]="dt1.filters['brand']?.value" placeholder="Busqueda por Placa"
+                class="p-column-filter p-inputtext-sm">
+            </th>
+            <th>
+              <input pInputText type="text" (input)="dt1.filter($event.target.value, 'model', 'contains')"
+                [value]="dt1.filters['model']?.value" placeholder="Busqueda por Modelo"
+                class="p-column-filter p-inputtext-sm">
+            </th>
+            <th>
+              <input pInputText type="text" (input)="dt1.filter($event.target.value, 'placa', 'contains')"
+                [value]="dt1.filters['placa']?.value" placeholder="Busqueda por Placa"
+                class="p-column-filter p-inputtext-sm">
+            </th>
+            <th>
+                <input pInputText type="text" (input)="dt1.filter($event.target.value, 'eco', 'contains')"
+              [value]="dt1.filters['eco']?.value" placeholder="Busqueda por No. Economico" 
+              class="p-column-filter p-inputtext-sm"> 
+            </th>
+            <th>
+              <input pInputText type="text" (input)="dt1.filter($event.target.value, 'capacity', 'contains')"
+              [value]="dt1.filters['capacity']?.value" placeholder="Busqueda por Capacidad" 
+              class="p-column-filter p-inputtext-sm"> 
+            </th>
+          </tr>
+  
+        </ng-template>
+        <ng-template pTemplate="body" let-TankerTruck>
+          <tr [pSelectableRow]="promoter">
+            <td>{{TankerTruck.brand }}</td>
+            <td>{{TankerTruck.model}}</td>
+            <td>{{TankerTruck.placa}}</td>
+            <td>{{TankerTruck.eco }}</td>
+            <td>{{TankerTruck.capacity }} L</td>
+            <td>
+              <button pButton pRipple icon="pi pi-pencil" class=" p-button-warning p-mr-2"
+                [routerLink]="['edit-tankertruck', TankerTruck.id]"></button>
+              &nbsp;
+              <button pButton pRipple icon="pi pi-trash" class=" p-button-danger  p-mr-2"
+                (click)="EditTankertruck(TankerTruck, i)"></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorleft">
+  
+        </ng-template>
+        <ng-template pTemplate="paginatorright">
+  
+        </ng-template>
+      </p-table>
+    </div>
+  
+  </div>
+  <br>

@@ -1,0 +1,352 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: #fcfcfc !important;
+}
+.row {
+  margin: auto;
+}
+.card {
+  background: var(--surface-e);
+  /* padding: 2rem; */
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14),
+    0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+.container {
+  max-width: 90vw !important;
+}
+
+.swal2-container.swal2-backdrop-show, .swal2-container.swal2-noanimation {
+  background: rgba(247, 247, 247, 0.973) !important;
+}
+
+.swal2-popup.swal2-loading {
+  overflow-y: hidden;
+  background-color: transparent;
+}
+
+.swal2-title {
+  color: "white"!important;
+}
+
+.input-group-addon {
+  background-color: #0000001a;
+}
+
+#page-404 .page-default .section-title-giant h1 {
+  font-size: 63px;
+}
+#page-404 .page-default .section-title {
+  margin-bottom: 28px;
+}
+#page-404 .page-default .section-title h1 {
+  font-size: 35px;
+}
+#page-404 .page-default .section-sub {
+  margin-bottom: 14px;
+}
+.page-default {
+  padding: 28px 0;
+}
+body.virtualoffice #header-app .header-content .header-logo {
+  padding-left: 49px;
+}
+body.virtualoffice #header-app .header-content .header-show-nav {
+  display: block;
+}
+body.virtualoffice #main-app #sidebar-app {
+  display: none;
+  height: auto !important;
+}
+body.virtualoffice #main-app #sidebar-app.active {
+  display: block;
+}
+body.virtualoffice #main-app .content {
+  padding: 0;
+}
+#BackTop {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  padding: 21px;
+  display: none;
+  z-index: 5;
+}
+#BackTop #BackTop-action {
+  background-color: #31b700;
+  width: 42px;
+  height: 42px;
+  text-align: center;
+  border-radius: 50%;
+  opacity: 0.4;
+  display: block;
+}
+#BackTop #BackTop-action:after {
+  position: relative;
+  content: "\F102";
+  font-family: FontAwesome;
+  font-size: 28px;
+  color: #fff;
+}
+#BackTop #BackTop-action:hover {
+  opacity: 0.6;
+  text-decoration: none;
+}
+#BackTop #BackTop-action:focus {
+  text-decoration: none;
+}
+#BackTop.in {
+  position: absolute;
+}
+#header {
+  border-bottom: 1px solid #efefef;
+  background-color: #fff;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 4;
+}
+#header .container {
+  position: relative;
+}
+#header .container .header-logo {
+  float: left;
+  display: table;
+  padding: 7px 0 0 7px;
+}
+#header .container .header-logo a {
+  color: inherit;
+}
+#header .container .header-logo > a > div {
+  float: left;
+}
+#header .container .header-logo .header-logo-icon {
+  color: #31b700;
+  width: 42px;
+  font-size: 30px;
+  text-align: center;
+}
+#header .container .header-logo .header-logo-name {
+  padding-left: 7px;
+}
+#header .container .header-logo .header-logo-name > span {
+  display: block;
+  font-size: 18px;
+  line-height: 100%;
+  font-weight: 600;
+  padding-top: 3px;
+}
+#header .container .header-logo .header-logo-name > small {
+  display: block;
+  font-size: 16px;
+  color: gray;
+}
+#header .container .header-show-nav {
+  display: none;
+  position: absolute;
+  right: 7px;
+  top: 7px;
+}
+#header .container .header-show-nav button {
+  border: 2px solid #1d1d1b;
+  border-radius: 0;
+}
+#header .container .header-nav {
+  display: block;
+  float: right;
+}
+#header .container .header-nav > ul {
+  display: table;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+#header .container .header-nav > ul > li {
+  float: left;
+  font-size: 15px;
+}
+#header .container .header-nav > ul > li > a {
+  display: block;
+  padding: 17.5px 14px;
+  color: gray;
+}
+#header .container .header-nav > ul > li > a b {
+  font-weight: 600;
+}
+#header .container .header-nav > ul > li ul {
+  color: gray;
+  overflow: hidden;
+}
+#header .container .header-nav > ul > li ul a {
+  padding: 7px 21px;
+  color: #999;
+}
+#header .container .header-nav > ul > li ul a.text-dark {
+  color: #666;
+}
+#header-app {
+  border-bottom: 1px solid #efefef;
+  background-color: #fff;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 4;
+}
+#header-app .header-content {
+  position: relative;
+}
+#header-app .header-content .header-logo {
+  float: left;
+  display: table;
+  padding: 7px 0 0 7px;
+}
+#header-app .header-content .header-logo a {
+  color: inherit;
+}
+#header-app .header-content .header-logo > a > div {
+  float: left;
+}
+#header-app .header-content .header-logo .header-logo-icon {
+  color: #31b700;
+  width: 42px;
+  font-size: 30px;
+  text-align: center;
+}
+#header-app .header-content .header-logo .header-logo-name {
+  padding-left: 7px;
+}
+#header-app .header-content .header-logo .header-logo-name > span {
+  display: block;
+  font-size: 18px;
+  line-height: 100%;
+  font-weight: 600;
+  padding-top: 3px;
+}
+#header-app .header-content .header-logo .header-logo-name > small {
+  display: block;
+  font-size: 16px;
+  color: gray;
+}
+#header-app .header-content .header-show-nav {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+}
+#header-app .header-content .header-show-nav button {
+  height: 57px;
+  width: 45px;
+  border: none;
+  border-right: 1px solid #efefef;
+  border-radius: 0;
+}
+#header-app .header-content .header-options {
+  display: block;
+  float: right;
+}
+#header-app .header-content .header-options > ul {
+  display: table;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+#header-app .header-content .header-options > ul > li {
+  float: left;
+  font-size: 15px;
+  border-left: 1px solid #efefef;
+}
+#header-app .header-content .header-options > ul > li > a {
+  display: block;
+  padding: 17.5px 14px;
+  color: gray;
+}
+#header-app .header-content .header-options > ul > li ul {
+  color: gray;
+  overflow: hidden;
+}
+#header-app .header-content .header-options > ul > li ul a {
+  color: inherit;
+  padding: 7px 21px;
+}
+#header-app .header-content .header-options > ul > li.user > a {
+  padding: 6px;
+}
+#header-app .header-content .header-options > ul > li.user > a .pic img {
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+}
+@media (max-width: 767px) {
+  #header .container {
+    padding: 0;
+  }
+  #header .container .header-logo {
+    float: none;
+    padding-bottom: 5px;
+  }
+  #header .container .header-show-nav {
+    display: block;
+  }
+  #header .container .header-nav {
+    display: none;
+    float: none;
+  }
+  #header .container .header-nav > ul {
+    border-top: 1px solid #efefef;
+    display: block;
+  }
+  #header .container .header-nav > ul > li {
+    float: none;
+    border-bottom: 1px solid #efefef;
+  }
+  #header .container .header-nav > ul > li:last-of-type {
+    border: none;
+  }
+  #header.active .container .header-nav {
+    display: block;
+  }
+  #header-app .header-content .header-logo {
+    padding-left: 49px;
+  }
+  #header-app .header-content .header-show-nav {
+    display: block;
+  }
+  #header-app .header-content .header-options > ul > li.user > a .pic img {
+    width: 0;
+  }
+}
+.sidebar {
+  padding: 0;
+  background-color: #f2f2f2;
+  border-right: 1px solid #ddd;
+}
+
+p-dropdown.ng-touched.ng-invalid > div {
+  box-shadow: 0 0 0 0.05em #F40000;
+  border: 1px solid #D40000;
+  border-radius: 2px;
+}
+
+p-dropdown.ng-touched.ng-valid > div {
+  box-shadow: 0 0 0 0.05em #28a745;
+  border: 1px solid #28a745;
+  border-radius: 2px;
+}
+
+/* p-dropdown.ng-invalid.ng-untouched.ui-inputwrapper-focus:not(form) > div {
+  box-shadow: 0 0 0 0.05em #F40000;
+  border: 1px solid #D40000;
+  border-radius: 2px;
+} */
+/* Importing Bootstrap SCSS file. */
+@import "~bootstrap/scss/bootstrap";

@@ -1,0 +1,106 @@
+
+<div  class="d-flex justify-content-center">
+    <p-card  [style]="{'width': '30rem', 'margin-bottom': '2em','margin-top': '2em' }"
+        styleClass="p-card-shadow">
+        <h5 class="card-title text-center">Registro Pipas </h5>
+        <form (ngSubmit)="TankerTruckCreate(A)" #A="ngForm" [formGroup]="aFormGroup" class="needs-validation center" novalidate>
+            <div class="form-row">
+                <div class="col-md-6 mb-3">
+                    <label for="validationTooltipUsername">Marca*</label>
+                    <div class="input-group">
+                        <input  id="brand" name="brand" type="text"
+                            class="form-control "  placeholder="Marca"
+                            formControlName="brand"
+                            [class]="{
+                                'is-invalid':
+                                brand.invalid && (brand.dirty || brand.touched),
+                                'is-valid': brand.valid
+                              }"
+                             required>
+                            <div *ngIf="brand.invalid && (brand.dirty || brand.touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="brand.errors.required">El campo es obligatorio</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="validationTooltipUsername">Modelo*</label>
+                    <div class="input-group">
+                        <input  id="model" name="model" type="text"
+                            class="form-control "  placeholder="Modelo"
+                            formControlName="model"
+                            [class]="{
+                                'is-invalid':
+                                model.invalid && (model.dirty || model.touched),
+                                'is-valid': model.valid
+                              }" required>
+                            <div *ngIf="model.invalid && (model.dirty || model.touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="model.errors.required">El campo es obligatorio</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+
+                <div class="col-md-6 mb-3">
+                    <label for="validationTooltip04">Placa*</label>
+                    <input  id="placa" name="placa"
+                        type="text" class="form-control" placeholder="Placa" 
+                        formControlName="placa"
+                        [class]="{
+                            'is-invalid':
+                            placa.invalid && (placa.dirty || placa.touched),
+                            'is-valid': placa.valid
+                          }" required>
+                        <div *ngIf="placa.invalid && (placa.dirty || placa.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="placa.errors.required">El campo es obligatorio</div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="validationTooltip03">No. Economico*</label>
+                    <input class="p-inputtext-sm"  id="eco" name="eco"
+                        type="text" class="form-control" placeholder="No. Economico" 
+                        formControlName="eco"
+                        [class]="{
+                            'is-invalid':
+                            eco.invalid && (eco.dirty || eco.touched),
+                            'is-valid': eco.valid
+                          }" required>
+                        <div *ngIf="eco.invalid && (eco.dirty || eco.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="eco.errors.required">El campo es obligatorio</div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                   <!--  <label for="validationCustomUsername">Capacidad(ℒ)</label>
+                    <div class="input-group">                      
+                      <input type="text" class="form-control" [(ngModel)]="TankerTruckM.capacity" id="capacity" name="capacity" placeholder="Capacidad" aria-describedby="inputGroupPrepend" required>
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroupPrepend">ℒ</span>
+                      </div>
+                      <div class="invalid-feedback">
+                        Please choose a username.
+                        </div>
+                    </div> -->
+                    <label>Capacidad (Litros)* </label>
+                    <p-inputNumber [class]="{
+                        'is-invalid':
+                        capacity.invalid && (capacity.dirty || capacity.touched),
+                        'is-valid': capacity.valid
+                      }" formControlName="capacity" class="p-inputtext-sm" id="capacity" name="capacity" prefix="" suffix=" L" :min="0" :max="20000"></p-inputNumber>
+                    <div *ngIf="capacity.invalid && (capacity.dirty || capacity.touched)"
+                    class="invalid-feedback">
+                    <div *ngIf="capacity.errors.required">El campo es obligatorio</div>
+                </div>
+                </div>
+            </div>
+            <p-button type="submit" label="Guardar" icon="pi pi-check" styleClass="p-button-sm p-button-success">
+            </p-button>
+            <p-button [routerLink]="['/tankertruck']" label="Cancel" icon="pi pi-times" styleClass="p-button-sm p-button-danger"
+                [style]="{'margin-left': '.4em'}"></p-button>
+        </form>
+
+    </p-card>
+</div>

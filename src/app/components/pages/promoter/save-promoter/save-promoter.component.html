@@ -1,0 +1,85 @@
+ <div class="d-flex justify-content-center ">
+     <p-card [style]="{'width': '30rem', 'margin-bottom': '2em','margin-top': '2em' }" styleClass="p-card-shadow ">
+         <h5 class="card-title text-center">Registro Promotor </h5>
+         <form (ngSubmit)="PromoterCrate(A)" #A="ngForm" [formGroup]="aFormGroup" class="needs-validation center"
+             novalidate>
+             <div class="form-row">
+                 <div class="col-md-12 mb-3">
+                     <label for="validationTooltipUsername">Nombre(s)* </label>
+                     <div class="input-group">
+                         <input id="firstName" name="firstName" type="text" class="form-control "
+                             formControlName="firstName" placeholder="Nombre(s)" 
+                             [class]="{
+                                'is-invalid':
+                                firstName.invalid && (firstName.dirty || firstName.touched),
+                                'is-valid': firstName.valid
+                              }" required>
+                         <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)"
+                             class="invalid-feedback">
+                             <div *ngIf="firstName.errors.required">El campo es obligatorio</div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+             <div class="form-row">
+
+                 <div class="col-md-6 mb-3">
+                     <label for="validationTooltip04">Apellido Paterno*</label>
+                     <input id="paternalSurname" name="paternalSurname" type="text" class="form-control"
+                         formControlName="paternalSurname" placeholder="Apellido Paterno" 
+                         [class]="{
+                            'is-invalid':
+                            paternalSurname.invalid && (paternalSurname.dirty || paternalSurname.touched),
+                            'is-valid': paternalSurname.valid
+                          }"
+                         required>
+                         <div *ngIf="paternalSurname.invalid && (paternalSurname.dirty || paternalSurname.touched)"
+                         class="invalid-feedback">
+                         <div *ngIf="paternalSurname.errors.required">El campo es obligatorio</div>
+                     </div>
+                    
+                 </div>
+                 <div class="col-md-6 mb-3">
+                     <label for="validationTooltip03">Apellido Materno*</label>
+                     <input id="maternalSurname" name="maternalSurname" type="text" class="form-control"
+                         formControlName="maternalSurname" placeholder="Apellido Materno" 
+                         [class]="{
+                            'is-invalid':
+                            maternalSurname.invalid && (maternalSurname.dirty || maternalSurname.touched),
+                            'is-valid': maternalSurname.valid
+                          }"
+                         required>
+                         <div *ngIf="maternalSurname.invalid && (maternalSurname.dirty || maternalSurname.touched)"
+                         class="invalid-feedback">
+                         <div *ngIf="maternalSurname.errors.required">El campo es obligatorio</div>
+                     </div>
+                   
+                 </div>
+                 <div class="col-md-6 mb-3">
+                     <label for="validationTooltip05">Genero*</label>
+                     <select name="gender" id="gender" formControlName="gender" placeholder="Genero"
+                     [class]="{
+                        'is-invalid':
+                        gender.invalid && (gender.dirty || gender.touched),
+                        'is-valid': gender.valid
+                      }"    
+                     class="form-control">
+                         <option [value]="1">Masculino</option>
+                         <option [value]="2">Femenino</option>
+                         <option [value]="3">Otros</option>
+                     </select>
+                     <div *ngIf="gender.invalid && (gender.dirty || gender.touched)"
+                         class="invalid-feedback">
+                         <div *ngIf="gender.errors.required">El campo es obligatorio</div>
+                     </div>
+                     
+                 </div>
+             </div>
+             <p-button type="submit" label="Guardar" icon="pi pi-check" styleClass="p-button-sm p-button-success">
+             </p-button>
+             <p-button [routerLink]="['/promotor']" label="Cancel" icon="pi pi-times"
+                 styleClass="p-button-sm p-button-danger" [style]="{'margin-left': '.4em'}"></p-button>
+         </form>
+
+     </p-card>
+ </div>

@@ -1,0 +1,167 @@
+<div class="card centrar">
+  <div class="card-body">
+
+    <p-toolbar styleClass="p-mb-4">
+      <ng-template pTemplate="left">
+        <!-- <p-button styleClass="p-button-sm p-button-success" label="Nuevo Registro" icon="pi pi-plus"
+        [routerLink]="['save-tankertruck']"></p-button> -->
+      </ng-template>
+      <ng-template pTemplate="right">
+        <p-button styleClass="p-button-sm"  [routerLink]="['Home']" label="Inicio"></p-button>
+      </ng-template>
+    </p-toolbar>
+    <br>
+    <p-table styleClass="p-datatable-sm p-datatable-striped p-datatable-responsive-demo" #dt1
+      [value]="delivery" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [scrollable]="true" dataKey="id"
+      [style]="{width:'100%'}" scrollHeight="60%" [rowsPerPageOptions]="[10,25,50]">
+      <ng-template pTemplate="caption" align="center">
+        Registro de Viajes
+      </ng-template>
+      <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+            <col style="width:200px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+            <col style="width:250px">
+        </colgroup>
+    </ng-template>
+      <ng-template pTemplate="header" let-rowData="rowData">
+
+        <tr>
+          <th pSortableColumn="id">Folio <p-sortIcon></p-sortIcon>
+          </th>
+          <th pSortableColumn="settlement.d_asenta">Calle<p-sortIcon></p-sortIcon>
+          </th>
+          <th pSortableColumn="externalNumber ">No,Mz,lt<p-sortIcon></p-sortIcon>
+          </th>
+          <th pSortableColumn="settlement.d_mnpio">Colonia<p-sortIcon></p-sortIcon>
+          </th>
+          <th pSortableColumn="btwFirstStreet">Entre calle Y Calle<p-sortIcon></p-sortIcon>
+          </th>
+          <th pSortableColumn="firstName">Nombre del Ciudadano<p-sortIcon></p-sortIcon>
+          </th>
+          <th pSortableColumn="firstName">Firma<p-sortIcon></p-sortIcon>
+          </th>
+          <th pSortableColumn="litersOfWater">No. Litos <p-sortIcon></p-sortIcon>
+          </th>
+          <th pSortableColumn="firstName">No. Tiros <p-sortIcon></p-sortIcon>
+          </th>
+          <th pSortableColumn="numberOfFamiliesServed">No. Familias <p-sortIcon></p-sortIcon>
+          </th>
+          <th pSortableColumn="numberOfFamiliesServed">No. Personas <p-sortIcon></p-sortIcon>
+          </th>
+          <th pSortableColumn="firstName">No. Telefono <p-sortIcon></p-sortIcon>
+          </th>
+          <th>Acciones</th>
+        </tr>
+
+        <tr>
+          <th>
+            <input pInputText type="text" (input)="dt1.filter($event.target.value, 'id', 'contains')"
+              [value]="dt1.filters['id']?.value" placeholder="Folio del Viaje"
+              class="p-column-filter p-inputtext-sm">
+          </th>
+          <th>
+            <input pInputText type="text" (input)="dt1.filter($event.target.value, 'settlement.d_asenta', 'contains')"
+              [value]="dt1.filters['settlement.d_asenta']?.value" placeholder="Busqueda por Calle"
+              class="p-column-filter p-inputtext-sm">
+          </th>
+          <th>
+            <input pInputText type="text" (input)="dt1.filter($event.target.value, 'externalNumber', 'contains')"
+              [value]="dt1.filters['externalNumber']?.value" placeholder="Numero Exterior"
+              class="p-column-filter p-inputtext-sm">
+          </th>
+          <th>
+              <input pInputText type="text" (input)="dt1.filter($event.target.value, 'settlement.d_mnpio ', 'contains')"
+            [value]="dt1.filters['settlement.d_mnpio ']?.value" placeholder="Busqueda por Delegación" 
+            class="p-column-filter p-inputtext-sm"> 
+          </th>
+          <th>
+            <input pInputText type="text" (input)="dt1.filter($event.target.value, 'btwFirstStreet', 'contains')"
+            [value]="dt1.filters['btwFirstStreet']?.value" placeholder="Busqueda por Primera calle" 
+            class="p-column-filter p-inputtext-sm"> 
+          </th>
+          <th>
+            <input pInputText type="text" (input)="dt1.filter($event.target.value, 'firstName', 'contains')"
+            [value]="dt1.filters['firstName']?.value" placeholder="Busqueda por Nombre" 
+            class="p-column-filter p-inputtext-sm"> 
+          </th>
+          <th>
+            <input pInputText type="text" (input)="dt1.filter($event.target.value, 'capacity', 'contains')"
+            [value]="dt1.filters['capacity']?.value" placeholder="Busqueda por Capacidad" 
+            class="p-column-filter p-inputtext-sm"> 
+          </th>
+          <th>
+            <input pInputText type="text" (input)="dt1.filter($event.target.value, 'litersOfWater', 'contains')"
+            [value]="dt1.filters['litersOfWater']?.value" placeholder="Busqueda por Litros" 
+            class="p-column-filter p-inputtext-sm"> 
+          </th>
+          <th>
+            <input pInputText type="text" (input)="dt1.filter($event.target.value, 'capacity', 'contains')"
+            [value]="dt1.filters['capacity']?.value" placeholder="Busqueda por Capacidad" 
+            class="p-column-filter p-inputtext-sm"> 
+          </th>
+          <th>
+            <input pInputText type="text" (input)="dt1.filter($event.target.value, 'numberOfFamiliesServed', 'contains')"
+            [value]="dt1.filters['numberOfFamiliesServed']?.value" placeholder="Busqueda por Numero de Familias" 
+            class="p-column-filter p-inputtext-sm"> 
+          </th>
+          <th>
+            <input pInputText type="text" (input)="dt1.filter($event.target.value, 'numberOfPeopleServed', 'contains')"
+            [value]="dt1.filters['numberOfPeopleServed']?.value" placeholder="Busqueda por Persona" 
+            class="p-column-filter p-inputtext-sm"> 
+          </th>
+         <!--  <th>
+            <input pInputText type="text" (input)="dt1.filter($event.target.value, 'capacity', 'contains')"
+            [value]="dt1.filters['capacity']?.value" placeholder="Busqueda por Capacidad" 
+            class="p-column-filter p-inputtext-sm"> 
+          </th> -->
+          <th></th>
+          <th></th>
+        </tr>
+
+      </ng-template>
+      <ng-template pTemplate="body" let-Delivery>
+        <tr [pSelectableRow]="Delivery">
+          <td>{{Delivery.id }}</td>
+          <td>{{Delivery.settlement.d_asenta}}</td>
+          <td>Num. {{Delivery.externalNumber }}, Lot {{Delivery.lot }} Maz. {{Delivery.block }}</td>
+          <td>{{Delivery.settlement.d_mnpio}}</td>
+          <td>{{Delivery.btwFirstStreet }} y {{Delivery.btwSecondStreet }}</td>
+          <td>{{Delivery.firstName }} {{Delivery.paternalSurname }} {{Delivery.maternalSurname }}</td>
+          <td>{{Delivery.lot }}</td>
+          <td>{{Delivery.litersOfWater }}</td>
+          <td>{{Delivery.lot }}</td>
+          <td>{{Delivery.numberOfFamiliesServed }}</td>
+          <td>{{Delivery.numberOfPeopleServed }}</td>
+          <td>{{Delivery.phoneNumber }}</td>
+          
+          <td>
+            <button pButton pRipple icon="pi pi-pencil" class=" p-button-warning p-mr-2"
+              [routerLink]="['/delivery-detail/edit-delivery-detail', Delivery.id]"></button>
+            &nbsp;
+           <button pButton pRipple icon="pi pi-trash" class=" p-button-danger  p-mr-2"
+              (click)="DeleteDeliveriDetail(Delivery, i)"></button> 
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="paginatorleft">
+
+      </ng-template>
+      <ng-template pTemplate="paginatorright">
+
+      </ng-template>
+    </p-table>
+  </div>
+
+</div>

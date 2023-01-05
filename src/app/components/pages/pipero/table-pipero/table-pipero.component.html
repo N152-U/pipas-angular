@@ -1,0 +1,87 @@
+<router-outlet></router-outlet>
+
+<div *ngIf="router.url == '/pipero'" class="card centrar">
+  <div class="card-body">
+    <p-toolbar styleClass="p-mb-4">
+      <ng-template pTemplate="left">
+        <p-button [routerLink]="['save-pipero']" styleClass="p-button-sm p-button-success" label="Nuevo Registro" icon="pi pi-plus" (click)="openNew()"></p-button>
+      </ng-template>
+      <ng-template pTemplate="right">
+        <p-button styleClass="p-button-sm" label="Inicio"></p-button>
+      </ng-template>
+    </p-toolbar>
+    <br>
+    <p-table styleClass="p-datatable-sm p-datatable-striped p-datatable-responsive-demo" #dt1 [value]="piperoData"
+      [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [scrollable]="true" dataKey="id"
+      scrollHeight="500px" [style]="{ width: '100%' }" [rowsPerPageOptions]="[5,10,25,50]">
+      <ng-template pTemplate="caption"  align="center">
+      Pipero
+      </ng-template>
+      <ng-template pTemplate="header" let-rowData="rowData">
+  
+        <tr>
+          <th pSortableColumn="firstName">Nombre(s) <p-sortIcon></p-sortIcon> </th>
+          <th pSortableColumn="paternalSurname">Apellido Paterno <p-sortIcon></p-sortIcon></th>
+          <th pSortableColumn="maternalSurname">Apellido Materno <p-sortIcon></p-sortIcon> </th>
+          <th pSortableColumn="gender">Genero</th>
+          <th>Acciones</th>
+        </tr>
+  
+        <tr>
+          <th>
+            <input pInputText type="text" (input)="dt1.filter($event.target.value, 'firstName', 'contains')"
+              [value]="dt1.filters['firstName']?.value" placeholder="Busqueda por nombre"
+              class="p-column-filter p-inputtext-sm">
+          </th>
+          <th>
+            <input pInputText type="text" (input)="dt1.filter($event.target.value, 'paternalSurname', 'contains')"
+              [value]="dt1.filters['paternalSurname']?.value" placeholder="Busqueda por Apellido Paterno"
+              class="p-column-filter p-inputtext-sm">
+          </th>
+          <th>
+            <input pInputText type="text" (input)="dt1.filter($event.target.value, 'maternalSurname', 'contains')"
+              [value]="dt1.filters['maternalSurname']?.value" placeholder="Busqueda por Apellido Materno"
+              class="p-column-filter p-inputtext-sm">
+          </th>
+          <th>
+            <!--  <input pInputText type="text" (input)="dt1.filter($event.target.value, 'gender', 'contains')"
+              [value]="dt1.filters['gender']?.value" placeholder="Busqueda por Genero" class="p-column-filter p-inputtext-sm"> -->
+          </th>
+          <th>
+  
+          </th>
+        </tr>
+  
+      </ng-template>
+      <ng-template pTemplate="body" let-pipero>
+        <tr [pSelectableRow]="pipero">
+          <td>{{pipero.firstName}}</td>
+          <td>{{pipero.paternalSurname}}</td>
+          <td>{{pipero.maternalSurname }}</td>
+          <td>
+            <div *ngIf="pipero.gender === '1'">Masculino
+            </div>
+            <div *ngIf="pipero.gender === '2'">Femenino
+            </div>
+            <div *ngIf="pipero.gender === '3'">Otro
+            </div>
+          </td>
+          <td>
+            <button pButton pRipple icon="pi pi-pencil" class=" p-button-warning p-mr-2"
+              [routerLink]="['edit-pipero', pipero.id]"></button>
+            &nbsp;
+            <button pButton pRipple icon="pi pi-trash" class=" p-button-danger  p-mr-2"
+              (click)="DeletePipero(pipero, i)"></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="paginatorleft">
+  
+      </ng-template>
+      <ng-template pTemplate="paginatorright">
+  
+      </ng-template>
+    </p-table>
+  </div>
+</div>
