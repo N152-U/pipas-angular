@@ -1,16 +1,12 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse, HttpParams } from "@angular/common/http";
 import { environment } from "@environments/environment";
 import { Router } from "@angular/router";
-
 /*---- MODELS---- */
-import { getUsers } from "../../../models/user/getUsers.module";
 import { UserModel } from "../../../models/user/userModel.module";
-
-import { map } from "rxjs/operators";
+import { catchError, map, tap } from "rxjs/operators";
 import { NgxRolesService } from "ngx-permissions";
-
+import { Observable, throwError } from "rxjs";
 @Injectable({
   providedIn: "root",
 })
@@ -20,58 +16,107 @@ export class ManageUsersService {
     private router: Router,
     private rs: NgxRolesService
   ) {}
-
-  crearUser(user: UserModel) {
+  /*  FUNCION POST CreateUser */
+  CreateUser(user: UserModel) {
     return this.http.post(`${environment.apiUrl}user/signup`, user).pipe(
       map((resp: any) => {
-        user.id = resp.id;
-        return user;
+        return resp;
       })
     );
   }
+  /*  FUNCION GET GetAllUsers */
+  GetAllUsers(offset, limit,username=null,firstName=null,middleName=null,lastName=null,roleName=null): Observable<any> {
+    // Initialize Params Object
+    let params = new HttpParams();
 
-  updateUser(user: UserModel) {
-    const userTemp = {
-      ...user,
-    };
-    delete userTemp.id;
-    return this.http.put(
-      `${environment.apiUrl}user/update/${user.id}`,
-      userTemp
-    );
+    // Begin assigning parameters
+    params = params.append('offset', offset);
+    params = params.append('limit', limit);
+    if(username)
+     params = params.append('username', username);
+     if(firstName)
+     params = params.append('firstName', firstName);
+     if(middleName)
+     params = params.append('middleName', middleName);
+     if(lastName)
+     params = params.append('lastName', lastName);
+     if(roleName)
+     params = params.append('roleName', roleName);
+    return this.http
+      .get<{ payload: UserModel }>(`${environment.apiUrl}user/getAll`,{params})
+      .pipe(
+        tap((data) => {
+          return data;
+        }),
+        catchError((err: HttpErrorResponse) => {
+          return throwError(err);
+        })
+      );
   }
+  getTotalRegisters(offset, limit,username=null,firstName=null,middleName=null,lastName=null,roleName=null)
+  {
+         // Initialize Params Object
+    let params = new HttpParams();
 
-  deleteUser(id: string) {
+    // Begin assigning parameters
+    params = params.append('offset', offset);
+    params = params.append('limit', limit);
+    if(username)
+     params = params.append('username', username);
+     if(firstName)
+     params = params.append('firstName', firstName);
+     if(middleName)
+     params = params.append('middleName', middleName);
+     if(lastName)
+     params = params.append('lastName', lastName);
+     if(roleName)
+     params = params.append('roleName', roleName);
+    return this.http.get<{ payload: number }>(`${environment.apiUrl}user/getTotalCount`,{params})
+    .pipe(tap(data => {
+      return  data.payload;
+    }),
+      catchError((err: HttpErrorResponse) => {
+        return throwError(err);
+      }))
+  }
+  /*FUNCION PUT UpdateUser */
+  UpdateUser(hashUser: string, params: any) {
+    return this.http.put(`${environment.apiUrl}user/update/${hashUser}`, params);
+  }
+   /*FUNCION PUT UpdatePassword */
+   UpdatePassword(hashUser: string, params: any) {
+    return this.http.put(`${environment.apiUrl}user/updatePassword/${hashUser}`, params);
+  }
+  /*  FUNCION DELETE DeleteUser */
+  DeleteUser(id: string) {
     return this.http.delete(`${environment.apiUrl}user/delete/${id}`);
   }
-  getUser(id: string) {
+  /* FUNCION GetIdUser */
+  GetIdUser(hash: string) {
     return this.http
-      .get<UserModel>(`${environment.apiUrl}user/getById/${id}`)
-      .pipe(map(this.createArrayUser));
+      .get<{ payload: UserModel }>(`${environment.apiUrl}user/getById/${hash}`)
+      .pipe(
+        map((res) => {
+          return res.payload;
+        })
+      );
   }
-
-  getAllUsers() {
+  GetDetailUser() {
     return this.http
-      .get(`${environment.apiUrl}user/getAll/1`)
-      .pipe(map(this.createArrayUsers));
+      .get<{ payload: UserModel }>(`${environment.apiUrl}user/getDetail`)
+      .pipe(
+        map((res) => {
+          return res.payload;
+        })
+      );
   }
-
-  private createArrayUsers(usersObj: object) {
-    const users: getUsers[] = [];
-    Object.keys(usersObj).forEach((key) => {
-      const user: getUsers = usersObj[key];
-      user.id = key;
-      users.push(user);
-    });
-    return users;
-  }
-  private createArrayUser(usersObj: object) {
-    const EditUser: UserModel[] = [];
-    Object.keys(usersObj).forEach((id) => {
-      const user: UserModel = usersObj[id];
-      user.id = id;
-      EditUser.push(user);
-    });
-    return EditUser;
+  GetByIdUserDetail(hash: string) {
+    return this.http
+      .get<{ payload: UserModel }>(`${environment.apiUrl}user/getById/${hash}/detail`)
+      .pipe(
+        map((res) => {
+          return res.payload;
+        })
+      );
   }
 }

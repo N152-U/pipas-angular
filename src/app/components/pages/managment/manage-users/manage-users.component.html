@@ -1,92 +1,96 @@
 <router-outlet></router-outlet>
 <div *ngIf="router.url == '/managment/manage-users'">
-  <div class="card centrar">
-    <header>
-      <h1 class="text-center text-black">Administración cuentas de usuarios</h1>
-    </header>
-    <p-toolbar styleClass="p-mb-4">
-      <ng-template pTemplate="left">
-        <p-button styleClass="p-button-sm p-button-success" label="Nuevo Registro" icon="pi pi-plus"
-          [routerLink]="['new-user']"></p-button>
-      </ng-template>
-      <ng-template pTemplate="right">
-        <p-button styleClass="p-button-sm" label="Inicio" [routerLink]="['home']"></p-button>
-      </ng-template>
-    </p-toolbar>
-    <br />
-    <p-table styleClass="p-datatable-sm p-datatable-striped p-datatable-responsive-demo" #dt1 [value]="users[0]"
-      [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
-      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [scrollable]="true" dataKey="id"
-      scrollHeight="500px" [style]="{ width: '100%' }" [rowsPerPageOptions]="[5,10, 25, 50]">
-      <ng-template pTemplate="header" let-rowData="rowData">
-        <tr>
-          <th pSortableColumn="username">Usuario<p-sortIcon></p-sortIcon>
-          </th>
-          <th pSortableColumn="firstName">Nombre<p-sortIcon></p-sortIcon>
-          </th>
-          <th pSortableColumn="middleName">
-            Apellido Paterno<p-sortIcon></p-sortIcon>
-          </th>
-          <th pSortableColumn="lastName">
-            Apellido Materno<p-sortIcon></p-sortIcon>
-          </th>
-          
-          <th pSortableColumn="roles.role">Role<p-sortIcon></p-sortIcon>
-          </th>
-          <th  pSortableColumn="status">Status</th>
-          <th>Acciones</th>
-        </tr>
-        <tr>
-          <th>
-            <input pInputText type="text" (input)="dt1.filter($event.target.value, 'username', 'contains')"
-              [value]="dt1.filters['username']?.value" placeholder="Busqueda por usuario"
-              class="p-column-filter p-inputtext-sm" />
-          </th>
-          <th>
-            <input pInputText type="text" (input)="dt1.filter($event.target.value, 'firstName', 'contains')"
-              [value]="dt1.filters['firstName']?.value" placeholder="Busqueda por nombre"
-              class="p-column-filter p-inputtext-sm" />
-          </th>
-          <th>
-            <input pInputText type="text" (input)="dt1.filter($event.target.value, 'middleName', 'contains')"
-              [value]="dt1.filters['middleName']?.value" placeholder="Busqueda por apellido paterno"
-              class="p-column-filter p-inputtext-sm" />
-          </th>
-          <th>
-            <input pInputText type="text" (input)="dt1.filter($event.target.value, 'lastName', 'contains')"
-              [value]="dt1.filters['lastName']?.value" placeholder="Busqueda por apellido materno"
-              class="p-column-filter p-inputtext-sm" />
-          </th>
-          
-          <th>
-            <input pInputText type="text" (input)="dt1.filter($event.target.value, 'roles.role', 'contains')"
-              [value]="dt1.filters['roles.role']?.value" placeholder="Busqueda por role"
-              class="p-column-filter p-inputtext-sm" />
-          </th>
-          <th></th>
-          <th></th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-user>
-        <tr [pSelectableRow]="user">
-          <td>{{ user.username }}</td>
-          <td>{{ user.firstName }}</td>
-          <td>{{ user.middleName }}</td>
-          <td>{{ user.lastName }}</td>
-          
-          <td>{{ user.roles.role }}</td>
-          <td>
-            <span
-              class="badge {{ user.status == 1 ? 'bg-success' : 'bg-warning' }}">{{ user.status == 1 ? "ACTIVO" : "BLOQUEADO" }}</span>
+    <div class="card centrar">
+        <header>
+            <h1 class="text-center text-black">Administraci&oacute;n cuentas de usuarios</h1>
+        </header>
+        <p-toolbar styleClass="p-mb-4">
+            <!--   <ng-template [ngxPermissionsOnly]="['CREATE.USER']"> -->
+            <p-button styleClass="p-button-sm p-button-success" label="Nuevo Registro" icon="pi pi-plus" [routerLink]="['new-user']"></p-button>
+            <!--     </ng-template> -->
+            <ng-template pTemplate="right">
+                <p-button styleClass="p-button-sm" label="Inicio" [routerLink]="['home']"></p-button>
+            </ng-template>
+        </p-toolbar>
+        <br />
+        <p-table styleClass="p-datatable-sm p-datatable-striped p-datatable-responsive-demo" #dt1 [value]="users" [paginator]="true" [rows]="5" [showCurrentPageReport]="true" currentPageReportTemplate="Registros del {first} al {last} de {totalRecords} Registros"
+            [scrollable]="true" dataKey="id" scrollHeight="500px" [style]="{ width: '100%' }" [rowsPerPageOptions]="[5, 10]" [lazy]="true" (onLazyLoad)="loadUsers($event)" [loading]="loadingTable" totalRecords="{{totalRecords}}">
+
+            <ng-template pTemplate="header" let-rowData="rowData">
+                <tr>
+                    <th pSortableColumn="username">Correo</th>
+                    <th pSortableColumn="firstName">Nombre</th>
+                    <th pSortableColumn="middleName">
+                        Apellido Paterno
+                    </th>
+                    <th pSortableColumn="lastName">
+                        Apellido Materno
+                    </th>
+
+                    <th pSortableColumn="roles.role">Rol</th>
+                    <th pSortableColumn="active">Estatus</th>
+                    <th>Acciones</th>
+                </tr>
+                <tr>
+                    <th>
+                        <input pInputText type="text" (input)="dt1.filter($event.target.value, 'username', 'contains')" [value]="$any(dt1.filters['username'])?.value" placeholder="Busqueda por usuario" class="p-column-filter p-inputtext-sm" />
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="dt1.filter($event.target.value, 'firstName', 'contains')" [value]="$any(dt1.filters['firstName'])?.value" placeholder="Busqueda por nombre" class="p-column-filter p-inputtext-sm" />
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="
+                dt1.filter($event.target.value, 'middleName', 'contains')
+              " [value]="$any(dt1.filters['middleName'])?.value" placeholder="Busqueda por apellido paterno" class="p-column-filter p-inputtext-sm" />
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="dt1.filter($event.target.value, 'lastName', 'contains')" [value]="$any(dt1.filters['lastName'])?.value" placeholder="Busqueda por apellido materno" class="p-column-filter p-inputtext-sm" />
+                    </th>
+
+                    <th>
+                        <input pInputText type="text" (input)="
+                dt1.filter($event.target.value, 'roles.role', 'contains')
+              " [value]="$any(dt1.filters['roles.role'])?.value" placeholder="Busqueda por role" class="p-column-filter p-inputtext-sm" />
+                    </th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-user let-i>
+                <tr [pSelectableRow]="user">
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.firstName }}</td>
+                    <td>{{ user.middleName }}</td>
+                    <td>{{ user.lastName }}</td>
+
+                    <td>{{ user.roles.role }}</td>
+                    <td>
+                        <span class="badge {{ user.active == 1 ? 'bg-success' : 'bg-warning' }}">{{ user.active == 1 ? "ACTIVO" : "BLOQUEADO" }}</span
+            >
           </td>
           <td>
-            <button class="btn btn-primary btnEditar" [routerLink]="['edit-user', user.id]">
+         <!--    <ng-template [ngxPermissionsOnly]="['UPDATE.USER']"> -->
+              <button 
+              class="btn btn-primary btnEditar"
+              [routerLink]="['edit-user', user.hash]"
+            >
               <i class="fa fa-pen"></i>
             </button>
+          <!--   </ng-template> -->
             &nbsp;
-            <button class="btn btn-danger" (click)="deleteUser(user, i)">
-              <i class="fa fa-trash"></i>
-            </button>
+          <!--   <ng-template [ngxPermissionsOnly]="['DELETE.USER']"> -->
+              <button class="btn btn-danger" (click)="DeleteUser(user, i)">
+                <i class="fa fa-trash"></i>
+              </button>
+        <!--     </ng-template> -->
+            &nbsp;
+           <!--  <ng-template [ngxPermissionsOnly]="['READ.USER']"> -->
+              <button class="btn btn-secondary"
+              [routerLink]="['detail-user', user.hash]">
+                <i class="fa fa-eye"></i>
+              </button>
+         <!--    </ng-template> -->
+
           </td>
         </tr>
       </ng-template>
@@ -95,18 +99,14 @@
     </p-table>
   </div>
 
-  <div *ngIf="!cargando && users.length === 0" class="alert alert-warning text-center mt-3 animated fadeIn faster">
+  <div
+    *ngIf="!cargando && users.length === 0"
+    class="alert alert-warning text-center mt-3 animated fadeIn faster"
+  >
     <h4 class="alert-heading">No hay registros</h4>
     <p>
       <i class="fa fa-exclamation fa-2x"></i>
     </p>
   </div>
 
-  <div *ngIf="cargando" class="alert alert-info text-center mt-3 animated fadeIn faster">
-    <h4 class="alert-heading">Cargando</h4>
-    <p>
-      <i class="fa fa-sync-alt fa-spin fa-2x"></i>
-    </p>
-    <p class="mb-0">Espere por favor</p>
-  </div>
 </div>

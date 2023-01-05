@@ -1,0 +1,122 @@
+<div style="background-color: rgba(255, 255, 255, 0);" class="centrar">
+    <p-divider align="center">
+        <div class="p-d-inline-flex p-ai-center">
+            <h2>Historial de Viajes</h2>
+        </div>
+    </p-divider>
+</div>
+<div></div>
+<div class="card centrar">
+    <div class="card-body">
+        <p-toolbar styleClass="p-mb-4">
+            <ng-template pTemplate="left">
+                <p-button icon="pi pi-plus" styleClass="p-button-sm p-button-raised p-button-secondary" label="Nuevo Registro" [style]="{'margin-left': '.4em'}" [routerLink]="['/trips/list']">
+                </p-button>
+                <p-button (click)="downloadAsPDF()" icon="pi pi-file-excel" styleClass="p-button-sm p-button-raised p-button-success" label="Excel" [style]="{'margin-left': '.4em'}"></p-button>
+                <p-button icon="pi pi-home" styleClass="p-button-sm p-button-raised" label="Inicio" [style]="{'margin-left': '.4em'}"></p-button>
+            </ng-template>
+        </p-toolbar>
+        <br>
+        <p-table styleClass="p-datatable-sm p-datatable-striped p-datatable-responsive-demo p-datatable-gridlines " #dt1 [value]="tripsDate" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} resultados"
+            [scrollable]="true" dataKey="id" [style]="{width:'100%'}" scrollHeight="60%" [rowsPerPageOptions]="[10,5]">
+            <ng-template pTemplate="colgroup" let-columns>
+                <colgroup>
+                    <col style="width:200px">
+                    <col style="width:250px">
+                    <col style="width:250px">
+                    <col style="width:250px">
+                    <col style="width:250px">
+                    <col style="width:250px">
+                    <col style="width:250px">
+                    <col style="width:250px">
+                    <col style="width:250px">
+                    <col style="width:250px">
+                </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header" let-rowData="rowData">
+
+                <tr>
+                    <th style="text-align: center;" pSortableColumn="folio">Folio
+                        <p-sortIcon></p-sortIcon>
+                    </th>
+                    <th style="text-align: center;" pSortableColumn="folio">Folio 2
+                        <p-sortIcon></p-sortIcon>
+                    </th>
+                    <th style="text-align: center;" pSortableColumn="placas">Placas
+                        <p-sortIcon></p-sortIcon>
+                    </th>
+                    <th style="text-align: center;" pSortableColumn="eco ">N. Economico
+                        <p-sortIcon></p-sortIcon>
+                    </th>
+                    <th style="text-align: center;" pSortableColumn="capacity">Capacidad
+                        <p-sortIcon></p-sortIcon>
+                    </th>
+                    <th style="text-align: center;" pSortableColumn="street">Direcci&oacute;n
+                        <p-sortIcon></p-sortIcon>
+                    </th>
+                    <th style="text-align: center;" pSortableColumn="firstNameCollaborator">Enlace
+                        <p-sortIcon></p-sortIcon>
+                    </th>
+                    <th style="text-align: center;" pSortableColumn="firstNameDriver">Pipero
+                        <p-sortIcon></p-sortIcon>
+                    </th>
+                    <th style="text-align: center;" pSortableColumn="round">Viaje
+                        <p-sortIcon></p-sortIcon>
+                    </th>
+                    <th style="text-align: center;">Acciones</th>
+                </tr>
+
+                <tr>
+                    <th>
+                        <input pInputText type="text" (input)="dt1.filter($event.target.value, 'folio', 'contains')" [value]="dt1.filters['folio']?.value" placeholder="Folio del Viaje" class="p-column-filter p-inputtext-sm">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="dt1.filter($event.target.value, 'folio2', 'contains')" [value]="dt1.filters['folio2']?.value" placeholder="Folio2 del Viaje" class="p-column-filter p-inputtext-sm">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="dt1.filter($event.target.value, 'placas', 'contains')" [value]="dt1.filters['placas']?.value" placeholder="Busqueda por Placas" class="p-column-filter p-inputtext-sm">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="dt1.filter($event.target.value, 'eco', 'contains')" [value]="dt1.filters['eco']?.value" placeholder="Numero Economico" class="p-column-filter p-inputtext-sm">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="dt1.filter($event.target.value, 'capacity', 'contains')" [value]="dt1.filters['capacity ']?.value" placeholder="Busqueda por Capacida" class="p-column-filter p-inputtext-sm">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="dt1.filter($event.target.value, 'street', 'contains')" [value]="dt1.filters['street']?.value" placeholder="Busqueda por Calle" class="p-column-filter p-inputtext-sm">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="dt1.filter($event.target.value, 'firstNameCollaborator', 'contains')" [value]="dt1.filters['firstNameCollaborator']?.value" placeholder="Busqueda por Enlace" class="p-column-filter p-inputtext-sm">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="dt1.filter($event.target.value, 'firstNameDriver', 'contains')" [value]="dt1.filters['firstNameDriver']?.value" placeholder="Busqueda por Pipero" class="p-column-filter p-inputtext-sm">
+                    </th>
+                    <th></th>
+                    <th></th>
+                </tr>
+
+            </ng-template>
+            <ng-template pTemplate="body" let-Trips>
+                <tr [pSelectableRow]="Trips">
+                    <td style="text-align: center;">{{Trips.folio}}</td>
+                    <td style="text-align: center;">{{Trips.folio2}}</td>
+                    <td style="text-align: center;">{{Trips.placa}}</td>
+                    <td style="text-align: center;">{{Trips.eco}}</td>
+                    <td>{{Trips.capacity}}</td>
+                    <td>{{Trips.street}}</td>
+                    <td>{{Trips.firstNameCollaborator}}</td>
+                    <td>{{Trips.firstNameDriver}}</td>
+                    <td>{{Trips.round}}</td>
+                    <td style="text-align: center;">
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-warning p-mr-2" [routerLink]="['/trips/edit', Trips.id]"></button> &nbsp;
+                        <button style="align-items: center; text-align: center;" pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger  p-mr-2" (click)="deleteTrips(Trips, i)"></button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="paginatorleft">
+            </ng-template>
+            <ng-template pTemplate="paginatorright">
+            </ng-template>
+        </p-table>
+    </div>
+</div>

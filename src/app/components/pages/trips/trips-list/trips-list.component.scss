@@ -1,0 +1,65 @@
+h4,
+h5 {
+    text-align: center;
+}
+
+.cardF {
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 1%;
+}
+
+button {
+    height: 20px;
+    text-align: center;
+}
+
+.center {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.card-centrar {
+    align-items: center;
+}
+
+.sombra {
+    box-shadow: 10px 5px 5px black;
+}
+
+label {
+    font-size: small;
+}
+
+@media screen and (max-width: 40rem) {
+     :host ::ng-deep {
+        .p-datatable {
+            &.p-datatable-responsive-demo {
+                .p-datatable-thead>tr>th,
+                .p-datatable-tfoot>tr>td {
+                    display: none !important;
+                }
+                .p-datatable-tbody>tr>td {
+                    text-align: left;
+                    display: block;
+                    width: 100%;
+                    float: left;
+                    clear: left;
+                    border: 0 none;
+                    .p-column-title {
+                        padding: .4rem;
+                        min-width: 30%;
+                        display: inline-block;
+                        margin: -.4em 1em -.4em -.4rem;
+                        font-weight: bold;
+                    }
+                    &:last-child {
+                        border-bottom: 1px solid var(--surface-d);
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,64 @@
+<div class="cardF">
+    <p-card>
+        <h5>Registro de colaborador</h5>
+        <form (ngSubmit)="createLeaders()" [formGroup]="aFormGroup" class="needs-validation center" novalidate>
+            <div class="p-fluid p-grid">
+
+                <div class="p-field p-col-12 p-md-3">
+                    <label for="firstname6">Nombre(s)*</label>
+                    <input id="firstname6" class="p-inputtext-sm" [pKeyFilter]="blockSpecial" type="text" pInputText formControlName="firstName" [class]="{
+                            'is-invalid':
+                            firstName.invalid && (firstName.dirty || firstName.touched),
+                            'is-valid': firstName.valid
+                          }">
+                    <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" class="invalid-feedback">
+                        <div *ngIf="firstName.errors.required">El campo es obligatorio</div>
+                    </div>
+                </div>
+
+
+                <div class="p-field p-col-12 p-md-3">
+                    <label for="lastname6">Apellido Paterno</label>
+                    <input id="lastname6" class="p-inputtext-sm" [pKeyFilter]="blockSpecial" type="text" pInputText formControlName="paternalSurname">
+                </div>
+
+
+                <div class="p-field p-col-12 p-md-3">
+                    <label for="address">Apellido Materno</label>
+                    <input id="lastname6" class="p-inputtext-sm" [pKeyFilter]="blockSpecial" type="text" pInputText formControlName="maternalSurname">
+                </div>
+
+                <div class="p-field p-col-12 p-md-3">
+                    <label for="city">Tel&eacute;fono*</label>
+                    <input id="city" class="p-inputtext-sm" type="text" pKeyFilter="num" maxlength="10" pInputText formControlName="phoneNumber" [class]="{
+                'is-invalid':
+                phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched),
+                'is-valid': phoneNumber.valid
+              }">
+                    <div *ngIf="phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)" class="invalid-feedback">
+                        <div *ngIf="phoneNumber.errors.required">El campo es obligatorio</div>
+                    </div>
+                </div>
+
+                <div class="p-field p-col-12 p-md-3">
+                    <label for="address">Colonia</label>
+                    <p-multiSelect id="id" class="p-inputtext-sm" [options]="settlement" [style]="{ width: '100%' }" scrollHeight="400px" formControlName="settlementsId" name="id" optionLabel="settlement" [filter]="true" filterBy="settlement" placeholder="Seleccione la Colonia"
+                        (onChange)="enlaceChanged()" [class]="{
+                        
+                      }">
+                    </p-multiSelect>
+                    <div *ngIf="settlementsId.invalid && (settlementsId.dirty || settlementsId.touched)" class="invalid-feedback">
+                        <div *ngIf="settlementsId.errors.required">El campo es obligatorio</div>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+            <div class="d-flex justify-content-end">
+                <p-button type="submit" label="Guardar" icon="pi pi-check" styleClass="p-button-sm p-button-success">
+                </p-button>
+                <p-button [routerLink]="['/enlace/list']" label="Regresar" icon="pi pi-arrow-left" styleClass="p-button-sm p-button-danger" [style]="{'margin-left': '.4em'}"></p-button>
+            </div>
+        </form>
+    </p-card>
+</div>

@@ -1,0 +1,116 @@
+<div class="cardF">
+    <p-card>
+        <h5>Edicion Registro de Pipas</h5>
+        <form (ngSubmit)="updateDriverVehicle()" [formGroup]="aFormGroup" class="needs-validation center" novalidate>
+            <p-divider [ngStyle]="{backgroundColor:'var(--blue-500)'}" align="left" type="dashed">
+
+                <b [style]="{'margin-left': '.4em'}">1. Datos del Pipero</b>
+            </p-divider>
+            <div style="padding: 2%;" class="p-fluid p-grid">
+
+                <div class="p-field p-col-12 p-md-3">
+                    <label for="firstname6">Nombre(s)*</label>
+                    <input id="firstname6" class="p-inputtext-sm" [pKeyFilter]="blockSpecial" type="text" pInputText formControlName="firstName" [class]="{
+                            'is-invalid':
+                            firstName.invalid && (firstName.dirty || firstName.touched),
+                            'is-valid': firstName.valid
+                          }">
+                    <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" class="invalid-feedback">
+                        <div *ngIf="firstName.errors.required">El campo es obligatorio</div>
+                    </div>
+                </div>
+
+                <div class="p-field p-col-12 p-md-3">
+                    <label for="lastname6">Apellido Paterno</label>
+                    <input id="lastname6" class="p-inputtext-sm" [pKeyFilter]="blockSpecial" type="text" pInputText formControlName="paternalSurname">
+                </div>
+
+
+                <div class="p-field p-col-12 p-md-3">
+                    <label for="address">Apellido Materno</label>
+                    <input id="lastname6" class="p-inputtext-sm" [pKeyFilter]="blockSpecial" type="text" pInputText formControlName="maternalSurname">
+                </div>
+
+                <div class="p-field p-col-12 p-md-3">
+                    <label for="city">Teléfono*</label>
+                    <input id="city" class="p-inputtext-sm" pKeyFilter="num" maxlength="10" pInputText formControlName="phoneNumber" [class]="{
+                'is-invalid':
+                phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched),
+                'is-valid': phoneNumber.valid
+              }">
+                    <div *ngIf="phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)" class="invalid-feedback">
+                        <div *ngIf="phoneNumber.errors.required">El campo es obligatorio</div>
+                    </div>
+                </div>
+            </div>
+
+            <p-divider [ngStyle]="{backgroundColor:'var(--blue-500)'}" align="left" type="dashed">
+                <b [style]="{'margin-left': '.4em'}">2. Datos de la Pipa</b>
+            </p-divider>
+
+            <div style="padding: 2%;" class="p-fluid p-grid">
+
+                <div class="p-field p-col-12 p-md-3">
+                    <label for="">Número Económico*</label>
+                    <input type="text" formControlName="eco" pInputText maxlength="3" pKeyFilter="num" placeholder="Numero Economico" [class]="{
+                    'is-invalid':
+                    eco.invalid && (eco.dirty || eco.touched),
+                    'is-valid': eco.valid
+                  }">
+                    <div *ngIf="eco.invalid && (eco.dirty || eco.touched)" class="invalid-feedback">
+                        <div *ngIf="eco.errors.required">El campo es obligatorio</div>
+                    </div>
+                </div>
+
+                <div class="p-field p-col-12 p-md-3">
+                    <label for="">Placa*</label>
+                    <input type="text" formControlName="placa" onkeyup="javascript:this.value=this.value.toUpperCase();" maxlength="7" pInputText pKeyFilter="alphanum" placeholder="Placas" [class]="{
+                            'is-invalid':
+                            placa.invalid && (placa.dirty || placa.touched),
+                            'is-valid': placa.valid
+                          }">
+                    <div *ngIf="placa.invalid && (placa.dirty || placa.touched)" class="invalid-feedback">
+                        <div *ngIf="placa.errors.required">{{placa.errors.message}}</div>
+                    </div>
+                </div>
+
+                <div class="p-field p-col-12 p-md-3">
+                    <label for="">Marca</label>
+                    <input type="text" formControlName="brand" onkeyup="javascript:this.value=this.value.toUpperCase();" maxlength="7" pInputText pKeyFilter="alphanum" placeholder="Marca">
+                </div>
+
+                <div class="p-field p-col-12 p-md-3">
+                    <label for="">Modelo</label>
+                    <input type="text" formControlName="model" pInputText pKeyFilter="alpha" placeholder="Modelo">
+                </div>
+
+                <div class="p-field p-col-12 p-md-3">
+                    <label for="dropdown">Dependencia*</label>
+                    <p-dropdown placeholder="Dependencia" styleClass=" " [options]="dependencyCatalog" formControlName="dependencyId" optionLabel="name" [showClear]="true" [class]="{
+                        'is-invalid':
+                        dependencyId.invalid && (dependencyId.dirty || dependencyId.touched),
+                        'is-valid': dependencyId.valid
+                      }"></p-dropdown>
+                    <div *ngIf="dependencyId.invalid && (dependencyId.dirty || dependencyId.touched)" class="invalid-feedback">
+                        <div *ngIf="dependencyId.errors.required">El campo es obligatorio</div>
+                    </div>
+                </div>
+
+                <div class="p-field p-col-12 p-md-3">
+                    <label for="dropdown">Capacidad*</label>
+                    <p-dropdown placeholder="Capacidad" styleClass=" " [options]="capacityCatalog" formControlName="capacityId" optionLabel="name" [showClear]="true"></p-dropdown>
+                    <!--  <div *ngIf="capacityId.invalid && (capacityId.dirty || capacityId.touched)" class="invalid-feedback">
+                        <div *ngIf="capacityId.errors.required">El campo es obligatorio</div>
+                    </div> -->
+                </div>
+            </div>
+            <br>
+            <div class="d-flex justify-content-end">
+                <p-button type="submit" label="Guardar" icon="pi pi-check" styleClass="p-button-sm p-button-success">
+                </p-button>
+                <p-button [routerLink]="['/pipas/list']" label="Regresar" icon="pi pi-arrow-left" styleClass="p-button-sm p-button-danger" [style]="{'margin-left': '.4em'}"></p-button>
+
+            </div>
+        </form>
+    </p-card>
+</div>

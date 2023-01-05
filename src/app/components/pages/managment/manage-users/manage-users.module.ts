@@ -36,14 +36,18 @@ import { RatingModule } from "primeng/rating";
 import { MenuModule } from "primeng/menu";
 import { CardModule } from "primeng/card";
 import { CommonModule } from '@angular/common';
-
+import { NgxPermissionsModule } from 'ngx-permissions';
+import { DetailUserComponent } from './detail-user/detail-user.component';
+import {KeyFilterModule} from 'primeng/keyfilter';
 @NgModule({
   declarations: [
     ManageUsersComponent,
     NewUserComponent,
-    EditUserComponent
+    EditUserComponent,
+    DetailUserComponent
   ],
   imports: [
+    KeyFilterModule,
     CommonModule,
     ManageUsersRoutingModule,
     FormsModule,
@@ -76,6 +80,9 @@ import { CommonModule } from '@angular/common';
     MenuModule,
     FileUploadModule,
     RatingModule,
+    NgxPermissionsModule,
+ 
+    NgxPermissionsModule.forChild(),
   ]
 })
 export class ManageUsersModule { }

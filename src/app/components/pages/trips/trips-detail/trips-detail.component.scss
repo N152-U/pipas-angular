@@ -1,0 +1,22 @@
+.border {
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 1%;
+    padding-bottom: 5%;
+}
+
+ul.cuadrado {
+    list-style-type: square;
+}
+
+.responsive {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+}
+
+table,
+th,
+td {
+    border: 1px solid black;
+}

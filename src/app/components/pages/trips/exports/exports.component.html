@@ -1,0 +1,19 @@
+<div style="background-color: rgb(255, 255, 255);" class="card centrar">
+    <h5>Todos los viajes</h5>
+
+    <div class="card-body">
+       
+        <div class="p-fluid p-formgrid p-grid">
+            <div class="p-field p-col-12 p-md-2">
+                <label for="basic">Fecha Inicio</label>
+                <p-calendar class="p-inputtext-sm" inputId="basic" [(ngModel)]="startDate"></p-calendar>
+            </div>
+            <div class="p-field p-col-12 p-md-2">
+                <label for="basic">Fecha Fin</label>
+                <p-calendar class="p-inputtext-sm" inputId="basic" [(ngModel)]="endDate"></p-calendar>
+            </div>
+        </div>
+            <p-button icon="pi pi-download" styleClass="p-button-sm p-button-raised p-button-secondary" label="Descargar Excel" [style]="{'margin-left': '.4em'}" (click)="getExcel()">
+            </p-button>
+    </div>
+</div>

@@ -1,0 +1,86 @@
+<div class="cardF">
+    <p-card>
+        <h5>Preregistro de viajes</h5>
+        <form (ngSubmit)="updateTrip()" [formGroup]="aFormGroup" class="needs-validation center" novalidate>
+            <div class="p-fluid p-formgrid p-grid">
+                <div class="p-field p-col-12 p-md-6">
+                    <label for="dropdown">Colaborador*</label>
+                    <p-dropdown placeholder="Seleccione un colaborador" class="p-inputtext-sm"  [options]="collaboratorCatalog" formControlName="collaboratorId" optionLabel="firstName" [showClear]="true" [class]="{
+                    'is-invalid':
+                    collaboratorId.invalid && (collaboratorId.dirty || collaboratorId.touched),
+                    'is-valid': collaboratorId.valid
+                  }" (onChange)="collaboratorChanged()">
+                        <ng-template pTemplate="selectedItem">
+                            <div class="collaborator-item collaborator-item-value" *ngIf="selectedCollaborator">
+
+                                <div>{{selectedCollaborator.firstName }} {{selectedCollaborator.paternalSurname }}</div>
+                            </div>
+                        </ng-template>
+                        <ng-template let-collaborator pTemplate="item">
+                            <div class="collaborator-item">
+
+                                <div>{{collaborator.firstName }} {{collaborator.paternalSurname }}</div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                    <div *ngIf="collaboratorId.invalid && (collaboratorId.dirty || collaboratorId.touched)" class="invalid-feedback">
+                        <div *ngIf="collaboratorId.errors.required">El campo es obligatorio</div>
+                    </div>
+                </div>
+                <!--
+                    <p-dropdown placeholder="Dependencia" styleClass=" " [options]="dependencyCatalog" formControlName="dependencyId" optionLabel="name" [showClear]="true" [class]="{
+                        'is-invalid':
+                        dependencyId.invalid && (dependencyId.dirty || dependencyId.touched),
+                        'is-valid': dependencyId.valid
+                      }"></p-dropdown>
+                   
+                </div-->
+                <div class="p-field p-col-12 p-md-6">
+                    <label for="phoneNumber">Telefono</label>
+                    <input id="phoneNumber" class="p-inputtext-sm" type="text" pInputText value="{{selectedCollaborator?selectedCollaborator.phoneNumber:''}}" disabled>
+                </div>
+                <div class="p-field p-col-12">
+                    <label for="dropdown">Colonia*</label>
+                    <p-dropdown placeholder="Seleccione una colonia" class="p-inputtext-sm" styleClass=" " [options]="settlements" formControlName="settlementId" optionLabel="" [showClear]="true" [class]="{
+                    'is-invalid':
+                    settlementId.invalid && (settlementId.dirty || settlementId.touched),
+                    'is-valid': settlementId.valid
+                  }" (onChange)="settlementChanged()">
+                        <ng-template pTemplate="selectedItem">
+                            <div class="collaborator-item collaborator-item-value" *ngIf="selectedSettlement">
+
+                                <div>{{selectedSettlement.settlement }}</div>
+                            </div>
+                        </ng-template>
+                        <ng-template let-settlement pTemplate="item">
+                            <div class="settlement-item">
+
+                                <div>{{settlement.settlement }}</div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                    <div *ngIf="settlementId.invalid && (settlementId.dirty || settlementId.touched)" class="invalid-feedback">
+                        <div *ngIf="settlementId.errors.required">El campo es obligatorio</div>
+                    </div>
+                    <input id="selectedSettlement" type="text" class="p-inputtext-sm" formControlName="municipalityId" value="{{selectedSettlement?selectedSettlement.municipalityId:''}}" hidden>
+                </div>
+                <div class="p-field p-col-12 p-md-6">
+                    <label for="dropdown">Calle*</label>
+                    <input id="street" class="p-inputtext-sm" type="text" class="p-inputtext-sm" pInputText formControlName="street" [class]="{
+                    'is-invalid':
+                    street.invalid && (street.dirty || street.touched),
+                    'is-valid': street.valid
+                  }">
+                    <div *ngIf="street.invalid && (street.dirty || street.touched)" class="invalid-feedback">
+                        <div *ngIf="street.errors.required">El campo es obligatorio</div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end">
+                <p-button type="submit" label="Guardar" icon="pi pi-check" styleClass="p-button-sm p-button-success">
+                </p-button>
+                <p-button [routerLink]="['/home']" label="Cancelar" icon="pi pi-times" styleClass="p-button-sm p-button-danger" [style]="{'margin-left': '.4em'}"></p-button>
+            </div>
+        </form>
+    </p-card>
+</div>

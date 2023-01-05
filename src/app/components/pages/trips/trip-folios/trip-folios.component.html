@@ -1,0 +1,123 @@
+<div class="cardF">
+    <p-card>
+        <h5 style="text-align: center;">Asignaci&oacute;n Folios - Nuevo viaje </h5>
+        <form (ngSubmit)="assign()" [formGroup]="aFormGroup" class="needs-validation center" novalidate>
+            <p-divider [ngStyle]="{backgroundColor:'var(--blue-500)'}" align="left" type="dashed">
+                <i class=" p-mr-1">1.</i>
+                <b [style]="{'margin-left': '.4em'}">Folios</b>
+            </p-divider>
+
+            <div style="padding-left: 1.5%;" class="p-fluid p-formgrid p-grid">
+                <div class="p-field p-col-12 p-md-3">
+    
+                    <p-checkbox id="folioType" value="2" (onChange)="onFolioTypeChange($event)" formControlName="folioType" label="Folio de 20,000 ltrs"></p-checkbox>
+    
+                </div>
+                <div class="p-field p-col-12 p-md-3">
+                    <label for="folio">Folio*</label>
+                    <input id="folio" class="form-control form-control-sm " type="text" [pKeyFilter]="blockSpecial" maxlength="10" formControlName="folio" [class]="{
+                        'is-invalid':
+                          folio.invalid &&
+                          (folio.dirty ||
+                            folio.touched ||
+                            folio.errors.minlength ||
+                            folio.errors.maxlength),
+                        'is-valid': folio.valid
+                      }">
+                    <div *ngIf="folio.invalid && (folio.dirty || folio.touched)" class="invalid-feedback">
+                        <div *ngIf="folio.errors.required">El campo es obligatorio</div>
+                        <div *ngIf="folio.errors.minlength">
+                            El campo debe ser de al menos {{folio.errors.minlength.requiredLength}} caracteres
+                        </div>
+                        <div *ngIf="folio.errors.maxlength">
+                            El campo máximo debe tener {{folio.errors.maxlength.requiredLength}} caracteres
+                        </div>
+                    </div>
+                </div>
+                <div class="p-field p-col-12 p-md-3" >
+    
+                    <p-checkbox id="folio2Type" value="1" (onChange)="onFolio2TypeChange($event)" formControlName="folio2Type" label="Agregar folio complemento de 10,000 ltrs"></p-checkbox>
+    
+                </div>
+                <div class="p-field p-col-12 p-md-3">
+                    <label for="folio2">Folio 2{{folioType.value.length?'':''}}</label>
+                    <input id="folio2" type="text" [pKeyFilter]="blockSpecial" class="form-control form-control-sm " formControlName="folio2" />
+    
+                </div>
+    
+    
+                
+    
+    
+            </div>
+            <p-divider [ngStyle]="{backgroundColor:'var(--blue-500)'}" align="left" type="dashed">
+                <i class=" p-mr-1">2.</i>
+                <b [style]="{'margin-left': '.4em'}">Datos de los Enlaces</b>
+            </p-divider>
+
+            <div style="padding-left: 1.5%;" class="p-fluid p-formgrid p-grid">
+                <div class="p-field p-col-12 p-md-3">
+                    <label for="">Nombre(s)</label>
+                    <input id="firstName" name="firstName" type="text" class="form-control form-control-sm " formControlName="settlementCollaborator" placeholder="Nombre(s)" required disabled>
+                </div>
+                <div class="p-field p-col-12 p-md-3">
+                    <label for="">Colonia</label>
+                    <input id="settlement" name="settlement" type="text" class="form-control form-control-sm " formControlName="settlementCollaborator" placeholder="colonia" required disabled>
+                </div>
+                <div class="p-field p-col-12 p-md-3">
+                    <label for="">Calle</label>
+                    <input id="street" name="street" type="text" class="form-control form-control-sm " formControlName="street" placeholder="calle" required disabled>
+                </div>
+                <div class="p-field p-col-12 p-md-3">
+                    <label for="">Telefono</label>
+                    <input id="phoneNumber" name="phoneNumber" type="text" class="form-control form-control-sm " formControlName="phoneNumberCollaborator" placeholder="Telefono" required disabled>
+                </div>
+            </div>
+
+            <p-divider [ngStyle]="{backgroundColor:'var(--blue-500)'}" align="left" type="dashed">
+                <i class=" p-mr-1">3.</i>
+                <b [style]="{'margin-left': '.4em'}">Datos de la Pipa</b>
+            </p-divider>
+
+            <div style="padding-left: 1.5%;" class="p-fluid p-formgrid p-grid">
+                <div class="p-field p-col-12 p-md-3">
+                    <label for="">Numero Eco</label>
+                    <input id="firstName" name="firstName" type="text" class="form-control form-control-sm " formControlName="eco" placeholder="Nombre(s)" required disabled>
+                </div>
+                <div class="p-field p-col-12 p-md-3">
+                    <label for="">Capacidad</label>
+                    <input id="settlement" name="settlement" type="text" class="form-control form-control-sm " formControlName="capacity" placeholder="colonia" required disabled>
+                </div>
+                <div class="p-field p-col-12 p-md-3">
+                    <label for="">Placas</label>
+                    <input id="street" name="street" type="text" class="form-control form-control-sm " formControlName="placa" placeholder="calle" required disabled>
+                </div>
+                <div class="p-field p-col-12 p-md-3">
+                    <label for="">Nombre(s)</label>
+                    <input id="street" name="street" type="text" class="form-control form-control-sm " formControlName="firstNameDriver" placeholder="calle" required disabled>
+                </div>
+            </div>
+
+            <p-divider [ngStyle]="{backgroundColor:'var(--blue-500)'}" align="left" type="dashed">
+                <i class=" p-mr-1">4.</i>
+                <b [style]="{'margin-left': '.4em'}">Imagen</b>
+            </p-divider>
+            <div style="padding-left: 1.5%;" class="p-fluid p-formgrid p-grid">
+                <div class="p-field p-col-12 p-md-3">
+                    <label for="photo">Foto</label>
+                    <input style="width: 40vw" type="file" id="photo" (change)="onFileChange($event)" #photo pInputText>
+                    <button type="button" (click)="clearFile($event)">Clear Image</button>
+                </div>
+                <div class="p-field p-col-12 p-md-12">
+                    <img *ngIf="imgResultAfterCompress" [src]="imgResultAfterCompress" alt="" height="60%" width="25%">
+                </div>
+            </div>
+            <div class="d-flex justify-content-end">
+                <p-button type="submit" label="Guardar" icon="pi pi-check" styleClass="p-button-sm p-button-success">
+                </p-button>
+                <p-button [routerLink]="['home']" label="Cancelar" icon="pi pi-times" styleClass="p-button-sm p-button-danger" [style]="{'margin-left': '.4em'}"></p-button>
+            </div>
+
+        </form>
+    </p-card>
+</div>

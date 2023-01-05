@@ -1,0 +1,66 @@
+<router-outlet></router-outlet>
+
+<div class="cardF">
+    <p-card header="Detalle de Usuario " styleClass="p-card-shadow">
+                
+            <div class="form-group row">
+                <div  class="col-md-6 mb-3">
+                  <label for="username">Usuario</label>
+                  <input
+                    id="usernam"
+                    type="text"
+                    class="form-control"
+                    value="{{ user.username }}"
+                    disabled
+                  />
+                  </div>
+                <div  class="col-md-6 mb-3">
+                  <label for="firstName">Nombre</label>
+                  <input
+                    id="firstName"
+                    type="text"
+                    class="form-control"
+                    value="{{ user.firstName }}"
+                    disabled
+                  />
+                </div>
+                <div  class="col-md-6 mb-3">
+                  <label for="middleName">Apellido Paterno</label>
+                  <input
+                    id="middleName"
+                    type="text"
+                    class="form-control"
+                    value="{{ user.middleName }}"
+                    disabled
+                  />
+                </div>
+                <div  class="col-md-6 mb-3">
+                  <label for="lastName">Apellido Materno</label>
+                  <input
+                    id="lastName"
+                    type="text"
+                    class="form-control"
+                    value="{{ user.lastName }}"
+                    disabled
+                  />
+                </div>
+                <div  class="col-md-6 mb-3">
+                  <label for="role">Rol</label>
+                  <input
+                    id="role"
+                    type="text"
+                    class="form-control"
+                    value="{{ user.roles }}"
+                    disabled
+                  />
+                </div>
+              </div>
+            <p-button
+            [routerLink]="['/managment/manage-users']" 
+            label="Regresar"
+            icon="pi pi-arrow-left"
+            styleClass="p-button-sm p-button-danger"
+            [style]="{ 'margin-left': '.4em' }"
+          ></p-button>
+    </p-card>
+</div>

@@ -1,75 +1,269 @@
 <div class="container">
-    <div class="card">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-sm-12 col-md-4">
-                    <div class="row">
-                        <div class="col-12">
-                            <h1>Foto de perfil</h1>
-                            <img src="./assets/images/user.jpg" style="height: 80%; width: 80%;">
-                           
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <button class="btn btn-main btn-success btn-group-justified" type="submit">
-                                Cambiar foto perfil
-                            </button>
-                        </div>
-                    </div>
-                   
-                </div>
-                
-                <div class="col-sm-12 col-md-8">
-                    <div class="row">
-                        <div class="col-12">
-                            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
-                                        aria-controls="home" aria-selected="true">Datos Principales</a>
-                                </li>
-                                <!-- <li class="nav-item">
-                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-                                        aria-controls="profile" aria-selected="false">Profile</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
-                                        aria-controls="contact" aria-selected="false">Contact</a>
-                                </li> -->
-                            </ul>
-                            <div class="tab-content" id="myTabContent">
-                                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                    <div class="form-group row">
-                                        <div class="col-12">
-                                            <label for="username">Usuario</label>
-                                            <input id="username" type="text" class="form-control" value="" disabled>
-                                        </div>
-                                        <div class=" col-12">
-                                            <label for="firstName">Nombre</label>
-                                            <input id="firstName" type="text" class="form-control" value="{{user.firstName}}">
-                                        </div>
-                                        <div class="col-12">
-                                            <label for="middleName">Apellido Paterno</label>
-                                            <input id="middleName" type="text" class="form-control" value="{{user.middleName}}">
-                                        </div>
-                                        <div class="col-12">
-                                            <label for="lastName">Apellido Materno</label>
-                                            <input id="lastName" type="text" class="form-control" value="{{user.lastName}}">
-                                        </div>
-                                        <div class="col-12">
-                                            <label for="role">Rol</label>
-                                            <input id="role" type="text" class="form-control" value="{{user.role}}" disabled>
-                                        </div>
-                                    </div>
-                                </div>
-                               <!--  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
-                                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div> -->
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-12 col-md-4">
+          <div class="row">
+            <div class="col-12">
+              <h1>Foto de perfil</h1>
+              <img
+                src="./assets/images/user.jpg"
+                style="height: 80%; width: 80%"
+              />
             </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <!--button
+                class="btn btn-main btn-success btn-group-justified"
+                type="submit"
+              >
+                Cambiar foto perfil
+              </!--button-->
+            </div>
+          </div>
         </div>
+
+        <div class="col-sm-12 col-md-8">
+          <div class="row">
+            <div class="col-12">
+              <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                  <a
+                    class="nav-link active"
+                    id="home-tab"
+                    data-toggle="tab"
+                    href="#home"
+                    role="tab"
+                    aria-controls="home"
+                    aria-selected="true"
+                    data-toggle="tab"
+                    >Datos Principales</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    id="profile-tab"
+                    data-toggle="tab"
+                    href="#passwordChange"
+                    role="tab"
+                    aria-controls="profile"
+                    aria-selected="true"
+                    data-toggle="tab"
+                    >Cambio de contraseña</a
+                  >
+                </li>
+              </ul>
+              <div class="tab-content" id="myTabContent">
+                <div
+                  class="tab-pane fade show active"
+                  id="home"
+                  role="tabpanel"
+                  aria-labelledby="home-tab"
+                >
+                  <div class="form-group row">
+                    <div class="col-12">
+                      <label for="username">Usuario</label>
+                      <input
+                        id="usernam"
+                        type="text"
+                        class="form-control"
+                        value="{{ user.username }}"
+                        disabled
+                      />
+                      </div>
+                    <div class="col-12">
+                      <label for="firstName">Nombre</label>
+                      <input
+                        id="firstName"
+                        type="text"
+                        class="form-control"
+                        value="{{ user.firstName }}"
+                        disabled
+                      />
+                    </div>
+                    <div class="col-12">
+                      <label for="middleName">Apellido Paterno</label>
+                      <input
+                        id="middleName"
+                        type="text"
+                        class="form-control"
+                        value="{{ user.middleName }}"
+                        disabled
+                      />
+                    </div>
+                    <div class="col-12">
+                      <label for="lastName">Apellido Materno</label>
+                      <input
+                        id="lastName"
+                        type="text"
+                        class="form-control"
+                        value="{{ user.lastName }}"
+                        disabled
+                      />
+                    </div>
+                    <div class="col-12">
+                      <label for="role">Rol</label>
+                      <input
+                        id="role"
+                        type="text"
+                        class="form-control"
+                        value="{{ user.roles }}"
+                        disabled
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="tab-pane fade"
+                  id="passwordChange"
+                  role="tabpanel"
+                  aria-labelledby="passwordChange-tab"
+                >
+                  <form
+                    [formGroup]="newDetailGroup"
+                    (ngSubmit)="updatePassword()"
+                    class="needs-validation center"
+                    novalidate="novalidate"
+                  >
+                    <div class="form-group row">
+                      <div class="p-fluid p-grid">
+                        <div class="p-field p-col-12">
+                          <label>Contraseña*</label>
+                          <div class="input-group">
+                            <input
+                              [type]="fieldTextType ? 'text' : 'password'"
+                              class="form-control"
+                              placeholder="Contraseña"
+                              id="password"
+                              name="password"
+                              formControlName="password"
+                              [class]="{
+                                'is-invalid':
+                                  password.invalid &&
+                                  (password.dirty ||
+                                    password.touched ||
+                                    password.errors.minlength ||
+                                    password.errors.maxlength),
+                                'is-valid': password.valid
+                              }"
+                            />
+                            <div class="input-group-append">
+                              <span class="input-group-text">
+                                <i
+                                  class="fa"
+                                  [ngClass]="{
+                                    'fa-eye-slash': !fieldTextType,
+                                    'fa-eye': fieldTextType
+                                  }"
+                                  (click)="toggleFieldTextType()"
+                                ></i>
+                              </span>
+                            </div>
+
+                            <div
+                              *ngIf="
+                                password.invalid &&
+                                (password.dirty || password.touched)
+                              "
+                              class="invalid-feedback"
+                            >
+                              <div *ngIf="password.errors.required">
+                                El campo es obligatorio
+                              </div>
+                              <div *ngIf="password.errors.minlength">
+                                La contraseña debe ser de al menos 6 caracteres
+                              </div>
+                              <div *ngIf="password.errors.maxlength">
+                                La contraseña máximo debe tener 15 caracteres
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="p-field p-col-12">
+                          <label>Confirmar contraseña*</label>
+                          <div class="input-group">
+                            <input
+                              [type]="
+                                fieldTextTypeConfirmation ? 'text' : 'password'
+                              "
+                              class="form-control"
+                              placeholder="Repite la contraseña"
+                              id="confirmPassword"
+                              name="confirmPassword"
+                              formControlName="confirmPassword"
+                              [class]="{
+                                'is-invalid':
+                                  confirmPassword.invalid &&
+                                  (confirmPassword.dirty ||
+                                    confirmPassword.touched ||
+                                    confirmPassword.errors.minlength ||
+                                    confirmPassword.errors.maxlength),
+                                'is-valid': confirmPassword.valid
+                              }"
+                            />
+                            <div class="input-group-append">
+                              <span class="input-group-text">
+                                <i
+                                  class="fa"
+                                  [ngClass]="{
+                                    'fa-eye-slash': !fieldTextTypeConfirmation,
+                                    'fa-eye': fieldTextTypeConfirmation
+                                  }"
+                                  (click)="toggleFieldTextTypeConfirmation()"
+                                ></i>
+                              </span>
+                            </div>
+                            <div
+                              *ngIf="
+                                confirmPassword.invalid &&
+                                (confirmPassword.dirty ||
+                                  confirmPassword.touched)
+                              "
+                              class="invalid-feedback"
+                            >
+                              <div *ngIf="confirmPassword.errors.required">
+                                El campo es obligatorio
+                              </div>
+                              <div *ngIf="confirmPassword.errors.minlength">
+                                La contraseña debe ser de al menos 6 caracteres
+                              </div>
+                              <div *ngIf="confirmPassword.errors.maxlength">
+                                La contraseña máximo debe tener 15 caracteres
+                              </div>
+                              <div
+                                *ngIf="
+                                  confirmPassword.errors.confirmedValidator
+                                "
+                              >
+                                La contraseña y la confirmación deben ser las
+                                mismas
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <br />
+                    <p-button
+                      type="submit"
+                      label="Guardar"
+                      icon="pi pi-check"
+                      styleClass="p-button-sm p-button-success"
+                    ></p-button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <!--  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+                                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div> -->
+  </div>
 </div>

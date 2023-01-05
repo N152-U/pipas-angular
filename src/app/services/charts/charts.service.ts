@@ -5,7 +5,6 @@ import { environment } from "@environments/environment";
 import { catchError, map, tap } from "rxjs/operators";
 import { ActivatedRoute } from "@angular/router";
 import { Observable } from 'rxjs';
-import { UserModel } from '../../models/user/user.module';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';

@@ -1,90 +1,224 @@
 <router-outlet></router-outlet>
 
-<div class="container">
-  <div class="row text-right">
-    <div class="col">
-      <button class="btn btn-danger" [routerLink]="['/manage-users']">
-        <i class="fa fa-arrow-left"></i>
-        Regresar
-      </button>
-    </div>
-  </div>
+<div class="cardF">
+    <p-card header="Edici&oacute;n de usuarios " styleClass="p-card-shadow">
+        <form [formGroup]="editDetailGroup" (ngSubmit)="UpdateUser()" class="needs-validation center" novalidate>
+            <div class="form-row">
+                <div class="col-md-6 mb-3">
+                    <label for="dropdown">Rol*</label>
+                    <p-dropdown #ddroles [options]="roles" [style]="{ width: '100%' }" scrollHeight="400px" id="hashRole" formControlName="hashRole" optionLabel="role" [filter]="true" filterBy="role" name="hashRole" [showClear]="true" placeholder="Seleccione el rol" (onChange)="roleChanged()"
+                        [class]="{
+              'is-invalid': hashRole.invalid && (hashRole.dirty || hashRole.touched),
+              'is-valid': hashRole.valid
+            }">
+                        <ng-template let-item pTemplate="selectedRole">
+                            <div class="role-role role-item-value" *ngIf="selectedRole">
+                                <div>{{ selectedRole.role}}</div>
+                            </div>
+                        </ng-template>
+                        <ng-template let-role pTemplate="role">
+                            <div class="role-item">
+                                <div>{{ role.role }}</div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
 
-  <div class="row animated fadeIn faster">
-    <form (ngSubmit)="updateUser(f)" #f="ngForm">
-      <div class="form-group">
-        <label>Usuario ID</label>
-        <input
-          type="number"
-          class="form-control"
-          placeholder="usuario ID"
-          [(ngModel)]="EditUser[0][0].id"
-          name="id"
-          disabled="disabled"
-        />
-      </div>
-      <div class="form-group">
-        <label>Role Id</label>
-        <input
-          type="number"
-          class="form-control"
-          placeholder="Role Id"
-          [(ngModel)]="EditUser[0][0].roleId"
-          name="roleId"
-        />
-      </div>
-      <div class="form-group">
-        <label>Usuario</label>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Usuario"
-          [(ngModel)]="EditUser[0][0].username"
-          name="username"
-        />
-      </div>
-      <div class="form-group">
-        <label>Contraseña</label>
-        <input
-          type="password"
-          class="form-control"
-          placeholder="Contraseña"
-          [(ngModel)]="EditUser[0][0].password"
-          name="password"
-        />
-      </div>
-      <div class="form-group">
-        <label>Nombre</label>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Nombre"
-          [(ngModel)]="EditUser[0][0].firstName"
-          name="firstName"
-        />
-      </div>
-      <div class="form-group">
-        <label>Apellido paterno</label>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Apellido paterno"
-          [(ngModel)]="EditUser[0][0].middleName"
-          name="middleName"
-        />
-      </div>
-      <div class="form-group">
-        <label>Apellido materno</label>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Apellido materno"
-          [(ngModel)]="EditUser[0][0].lastName"
-          name="lastName"
-        />
-      </div>
-      <br /><br />
-      <button type="submit" class="btn btn-success">Actualizar</button>
-    </form>
-  </div>
+                    <div *ngIf="hashRole.invalid && (hashRole.dirty || hashRole.touched)" class="invalid-feedback">
+                        <div *ngIf="hashRole.errors.required">El campo es obligatorio</div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Correo*</label>
+                    <input type="text" class="form-control" placeholder="Usuario" id="username" name="username" formControlName="username" [class]="{
+              'is-invalid':
+                username.invalid &&
+                (username.dirty ||
+                  username.touched ||
+                  username.errors.minlength ||
+                  username.errors.maxlength),
+              'is-valid': username.valid
+            }" />
+                    <div *ngIf="username.invalid && (username.dirty || username.touched)" class="invalid-feedback">
+                        <div *ngIf="username.errors.required">El campo es obligatorio</div>
+                        <div *ngIf="username.errors.minlength">
+                            El usuario debe ser de al menos 4 caracteres
+                        </div>
+                        <div *ngIf="username.errors.maxlength">
+                            El usuario máximo debe tener 15 caracteres
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Nombre*</label>
+                    <input type="text" [pKeyFilter]="noSpecial" class="form-control" placeholder="Nombre" id="firstName" name="firstName" formControlName="firstName" [class]="{
+              'is-invalid':
+                firstName.invalid &&
+                (firstName.dirty ||
+                  firstName.touched ||
+                  firstName.errors.minlength ||
+                  firstName.errors.maxlength),
+              'is-valid': firstName.valid
+            }" />
+                    <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" class="invalid-feedback">
+                        <div *ngIf="firstName.errors.required">El campo es obligatorio</div>
+                        <div *ngIf="firstName.errors.minlength">
+                            El usuario debe ser de al menos 4 caracteres
+                        </div>
+                        <div *ngIf="firstName.errors.maxlength">
+                            El usuario máximo debe tener 20 caracteres
+                        </div>
+                        <div *ngIf="firstName.errors.pattern">
+                            El usuario solo debe contener letras
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Apellido paterno*</label>
+                    <input type="text" [pKeyFilter]="noSpecial" class="form-control" placeholder="Apellido paterno" id="middleName" name="middleName" formControlName="middleName" [class]="{
+              'is-invalid':
+                middleName.invalid &&
+                (middleName.dirty ||
+                  middleName.touched ||
+                  middleName.errors.minlength ||
+                  middleName.errors.maxlength),
+              'is-valid': middleName.valid
+            }" />
+                    <div *ngIf="
+              middleName.invalid && (middleName.dirty || middleName.touched)
+            " class="invalid-feedback">
+                        <div *ngIf="middleName.errors.required">
+                            El campo es obligatorio
+                        </div>
+                        <div *ngIf="middleName.errors.minlength">
+                            El usuario debe ser de al menos 4 caracteres
+                        </div>
+                        <div *ngIf="middleName.errors.maxlength">
+                            El usuario máximo debe tener 20 caracteres
+                        </div>
+                        <div *ngIf="middleName.errors.pattern">
+                            El usuario solo debe contener letras
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 mb-3">
+                    <div class="col-md-6 mb-3">
+                        <label>Apellido materno*</label>
+                        <input type="text" [pKeyFilter]="noSpecial" class="form-control" placeholder="Apellido materno" id="lastName" name="lastName" formControlName="lastName" [class]="{
+                'is-invalid':
+                  lastName.invalid &&
+                  (lastName.dirty ||
+                    lastName.touched ||
+                    lastName.errors.minlength ||
+                    lastName.errors.maxlength),
+                'is-valid': lastName.valid
+              }" />
+                        <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="invalid-feedback">
+                            <div *ngIf="lastName.errors.required">
+                                El campo es obligatorio
+                            </div>
+                            <div *ngIf="lastName.errors.minlength">
+                                El usuario debe ser de al menos 4 caracteres
+                            </div>
+                            <div *ngIf="lastName.errors.maxlength">
+                                El usuario máximo debe tener 20 caracteres
+                            </div>
+                            <div *ngIf="lastName.errors.pattern">
+                                El usuario solo debe contener letras
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Contraseña*</label>
+                    <div class="input-group">
+                        <input [type]="fieldTextType ? 'text' : 'password'" class="form-control" placeholder="Contraseña" id="password" name="password" formControlName="password" [class]="{
+                'is-invalid':
+                  password.invalid &&
+                  (password.dirty ||
+                    password.touched ||
+                    password.errors.minlength ||
+                    password.errors.maxlength),
+                'is-valid': password.valid
+              }" />
+                        <div class="input-group-append">
+                            <span class="input-group-text">
+                <i
+                  class="fa"
+                  [ngClass]="{
+                    'fa-eye-slash': !fieldTextType,
+                    'fa-eye': fieldTextType
+                  }"
+                  (click)="toggleFieldTextType()"
+                ></i>
+              </span>
+                        </div>
+
+                        <div *ngIf="password.invalid && (password.dirty || password.touched)" class="invalid-feedback">
+                            <div *ngIf="password.errors.required">
+                                El campo es obligatorio
+                            </div>
+                            <div *ngIf="password.errors.minlength">
+                                La contraseña debe ser de al menos 6 caracteres
+                            </div>
+                            <div *ngIf="password.errors.maxlength">
+                                La contraseña máximo debe tener 15 caracteres
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Confirmar contraseña*</label>
+                    <div class="input-group">
+                        <input [type]="fieldTextTypeConfirmation ? 'text' : 'password'" class="form-control" placeholder="Repite la contraseña" id="confirmPassword" name="confirmPassword" formControlName="confirmPassword" [class]="{
+                'is-invalid':
+                  confirmPassword.invalid &&
+                  (confirmPassword.dirty ||
+                    confirmPassword.touched ||
+                    confirmPassword.errors.minlength ||
+                    confirmPassword.errors.maxlength),
+                'is-valid': confirmPassword.valid
+              }" />
+                        <div class="input-group-append">
+                            <span class="input-group-text">
+                <i
+                  class="fa"
+                  [ngClass]="{
+                    'fa-eye-slash': !fieldTextTypeConfirmation,
+                    'fa-eye': fieldTextTypeConfirmation
+                  }"
+                  (click)="toggleFieldTextTypeConfirmation()"
+                ></i>
+              </span>
+                        </div>
+                        <div *ngIf="
+                confirmPassword.invalid &&
+                (confirmPassword.dirty || confirmPassword.touched)
+              " class="invalid-feedback">
+                            <div *ngIf="confirmPassword.errors.required">
+                                El campo es obligatorio
+                            </div>
+                            <div *ngIf="confirmPassword.errors.minlength">
+                                La contraseña debe ser de al menos 6 caracteres
+                            </div>
+                            <div *ngIf="confirmPassword.errors.maxlength">
+                                La contraseña máximo debe tener 15 caracteres
+                            </div>
+                            <div *ngIf="confirmPassword.errors.confirmedValidator">
+                                La contraseña y la confirmación deben ser las mismas
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p-button type="submit" label="Actualizar" icon="pi pi-check" styleClass="p-button-sm p-button-success">
+            </p-button>
+            <p-button [routerLink]="['/managment/manage-users']" label="Cancelar" icon="pi pi-times" styleClass="p-button-sm p-button-danger" [style]="{ 'margin-left': '.4em' }"></p-button>
+        </form>
+    </p-card>
 </div>

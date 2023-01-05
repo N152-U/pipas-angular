@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ManagmentComponent } from './managment.component';
 import { ManagmentRoutingModule } from './managment-routing.module';
 import { CommonModule } from '@angular/common';
+import { NgxPermissionsModule } from 'ngx-permissions';
 
 
 
@@ -12,7 +13,10 @@ import { CommonModule } from '@angular/common';
         ReactiveFormsModule,
         FormsModule,
         ManagmentRoutingModule,
-        CommonModule
+        CommonModule,
+        NgxPermissionsModule,
+        NgxPermissionsModule.forRoot(),
+        NgxPermissionsModule.forChild(),
     ],
     declarations: [
         ManagmentComponent,

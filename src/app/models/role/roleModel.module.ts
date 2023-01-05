@@ -1,5 +1,7 @@
 export class roleModel {
     id:string;
     role:string;
-    permissions:[];
+    hash: string;
+    active: boolean;
+    createdAt: string;
    }

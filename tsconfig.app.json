@@ -3,7 +3,11 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
-    "types": []
+    "types": [ "arcgis-js-api","node"],
+    "target": "es2018",
+    "module": "es2020",
+    "lib": ["es2020", "dom"]
+    
   },
   "files": [
     "src/main.ts",

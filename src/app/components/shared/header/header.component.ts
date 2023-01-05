@@ -1,10 +1,11 @@
+import { UserModel } from '@app/models/user/userModel.module';
 import { AfterContentInit, Component, OnInit, isDevMode, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth/auth.service';
-import { UserModel } from '../../../models/user/user.module';
+
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 import { OnDestroy } from '@angular/core';
-import { NgxRolesService } from 'ngx-permissions';
+import { NgxPermissionsService, NgxRolesService } from "ngx-permissions";
 import { environment } from '@environments/environment';
 
 @Component({
@@ -22,7 +23,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private router: Router,
     private auth: AuthService,
     private rs: NgxRolesService,
-    private _ngZone: NgZone
+    private _ngZone: NgZone,
+    private permissionsService: NgxPermissionsService,
   ) {
     
     if(isDevMode())console.log(this.router);

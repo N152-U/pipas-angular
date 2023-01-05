@@ -9,7 +9,8 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 import { from, Observable, throwError } from 'rxjs';
-import { UserModel } from '../../models/user/user.module';
+
+import { UserModel } from '@app/models/user/userModel.module';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { environment } from '@environments/environment';
 import { Router } from '@angular/router';
@@ -17,7 +18,7 @@ import { Router } from '@angular/router';
 
 import Swal from 'sweetalert2';
 import { catchError, finalize, tap } from 'rxjs/operators';
-import { NgxRolesService } from 'ngx-permissions';
+import { NgxRolesService,NgxPermissionsService } from 'ngx-permissions';
 import { isNull } from '@angular/compiler/src/output/output_ast';
 
 const OPTIONS = {
@@ -39,14 +40,14 @@ export class AuthService {
     withCredentials?: boolean,
   } */
 
-  constructor(private http: HttpClient, private router: Router, private rs:NgxRolesService) {
+  constructor(private http: HttpClient, private router: Router, private rs:NgxRolesService,private ps:NgxPermissionsService) {
     //this.getToken();
   }
 
 
-  getLoggedUserPermissions(username): Observable<any>{
-    console.log(`${environment.apiUrl}user/${username}/permissions`)
-    return this.http.get(`${environment.apiUrl}user/admin/permissions`, OPTIONS).pipe(tap(data=>{
+  getLoggedUserPermissions(hash): Observable<any>{
+
+    return this.http.get(`${environment.apiUrl}user/${hash}/permissions`, OPTIONS).pipe(tap(data=>{
       
      return data;
     }),
@@ -57,6 +58,20 @@ export class AuthService {
     
   }
 
+
+  /** GetAllUsers(): Observable<any> {
+    return this.http
+      .get<{ payload: getUsers }>(`${environment.apiUrl}user/getAll`)
+      .pipe(
+        tap((data) => {
+          return data;
+        }),
+        catchError((err: HttpErrorResponse) => {
+          return throwError(err);
+        })
+      );
+  } */
+
   isAuth() {
     //Token decodificado
     const decodedToken = this.getTokenData();
@@ -66,10 +81,10 @@ export class AuthService {
       this.hasUser = true;
       //Hacemos la carga del rol con sus respectivos permisos
         //Rol y permisos provenientes desde la base de datos
-        this.getLoggedUserPermissions(decodedToken.username).subscribe((data)=>{
+        this.getLoggedUserPermissions(decodedToken.hash).subscribe((data)=>{
           console.log(data)
         this.rs.addRoleWithPermissions(data.payload.role, data.payload.permissions);
-        });
+        }).unsubscribe();
        
     } else {
       this.getUserLoggedInData.emit();
@@ -132,7 +147,7 @@ export class AuthService {
   logOut() {
 
     let successfullyRemovedToken = false;
-
+    this.rs.flushRolesAndPermissions();
     localStorage.removeItem('token');
     if (localStorage.getItem('token') === null) {
       successfullyRemovedToken = true;

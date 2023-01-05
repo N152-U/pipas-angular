@@ -14,7 +14,7 @@ export class SettlementModel {
   
   municipalityId: number;
   zip_code: number;
-  d_asenta: string;
+  settlement: string;
   d_tipo_asenta: string;
   d_mnpio: string;
   d_estado: string;

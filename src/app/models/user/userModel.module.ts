@@ -1,9 +1,12 @@
 export class UserModel {
     id:string;
-    roleId: number;
+    hash: string;
     username:string;
     password:string;
     firstName: string;
     middleName: string;
     lastName: string;
+    active: boolean;
+    roles: string;
+    hashRole: string;
 }

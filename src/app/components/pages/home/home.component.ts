@@ -1,3 +1,4 @@
+import { CatalogService } from '@app/services/catalog/catalog.service';
 import { ChartModel } from './../../../models/charts/charts.module';
 import { ChartsService } from './../../../services/charts/charts.service';
 /* impotar formularios y para las rutas */
@@ -5,10 +6,13 @@ import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import {ChartModule} from 'primeng/chart';
 /* importamos modelos y el servicio  */
-import { DeliveryModel } from '@app/models/delivery/delivery.module';
-import { DeliveryService } from '@app/services/delivery/delivery.service';
-import { PromoterModel } from '@app/models/promoter/promoter.module';
-import { PromoterService } from '@app/services/promoter/promoter.service';
+import { collaboratorModel } from '@app/models/collaborator/collaborator.module';
+import { CollaboratorService } from '@app/services/collaborator/collaborator.service';
+import { TripsService } from '@app/services/trips/trips.service';
+import { tripsModel } from '@app/models/trips/trips.module';
+import { LazyLoadEvent } from 'primeng/api';
+
+
 import {
   ChangeDetectorRef,
   Component,
@@ -40,11 +44,14 @@ import Swal, { SweetAlertOptions } from 'sweetalert2';
 import * as moment from 'moment';
 import { NgxPermissionsService, NgxRolesService } from 'ngx-permissions';
 import { HttpClient } from '@angular/common/http';
+import { isThisTypeNode } from 'typescript';
+import { array } from '@amcharts/amcharts4/core';
 
 
 
 declare var $: any;
 
+const exp = /^EXT-/g;
 @Component({
   selector: "app-home",
   templateUrl: "./home.component.html",
@@ -62,6 +69,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   
   data: any;    
   options: any;
+
   /* rm -rf node_modules/
   npm cache clear
   npm install
@@ -94,18 +102,25 @@ https://valor-software.com/ngx-bootstrap/#/datepicker#min-mode
   datePickerInvalidState: boolean;
   datePickerInvalidText: string;
   loadingButton: boolean;
-
   bsConfig: Partial<BsDatepickerConfig>;
-
   progressPercent: number;
-
-  
+  first = 0;
+  rows = 20;
+  newTrips: collaboratorModel[] = [];
+  trips : any;
   /* GetallTankerTruck guarda las variables */
-
   chartData: ChartModel[] = [];
   cargando = false;
-
   cols: any[];
+  loadingTable=true;
+  totalRecords:Number=0;
+  totalPipe: number;
+  totalTrip: number;
+  totalLiter: number;
+
+  selectedStatus:any=null;
+
+  statuses:[]=[];
 
   constructor(
     private renderer: Renderer2,
@@ -113,9 +128,10 @@ https://valor-software.com/ngx-bootstrap/#/datepicker#min-mode
     private ps: NgxPermissionsService,
     private rs: NgxRolesService,
     private http: HttpClient,
-    private apidelivery:DeliveryService,
-    private apipromoter:PromoterService,
     private apicharts: ChartsService, 
+    private apiCollaborator: CollaboratorService,
+    private apiTrip: TripsService,
+    private apiCatalog: CatalogService
   ) {
     
 
@@ -126,7 +142,10 @@ https://valor-software.com/ngx-bootstrap/#/datepicker#min-mode
   roles$ = this.rs.roles$;
 
   ngOnInit(): void {
-    
+    this.apiCatalog.getStatuses().subscribe((data)=>
+    {
+      this.statuses=data.payload;
+    })
   }
  
   ngAfterViewInit(): void {
@@ -135,9 +154,25 @@ https://valor-software.com/ngx-bootstrap/#/datepicker#min-mode
         if (isDevMode()) console.log(event);
       }
     });
+  
+    this.apiTrip.getCountVehicle().subscribe((res) => {
+      this.totalPipe = res.payload; 
+     
+    });
+    
+    this.apiTrip.getCountTripsDaily().subscribe((res) => {
+      console.log("totalViajes",res);
+      this.totalTrip = res.payload; 
+    });
 
+    this.apiTrip.getTotalLitersDaily().subscribe((res) => {
+      console.log("totalLitros",res);
+      this.chartData = res.payload;
+      this.totalLiter = res.payload;
+      this.litersofwaterRef.buildPictorial(this.chartData);     
+    });
 
-    this.apicharts.getTotalLiters().subscribe((res) => {
+    /* this.apicharts.getTotalLiters().subscribe((res) => {
       console.log("total",res);
       this.chartData = res.payload;
       this.litersofwaterRef.buildPictorial(this.chartData[0].litersOfWater);     
@@ -164,40 +199,145 @@ https://valor-software.com/ngx-bootstrap/#/datepicker#min-mode
       console.log("total viajes por dias",res);
       this.chartData = res.payload;
       this.tipsDayRef.dateTripsMunicipality(res.payload, 'createAtnew', 'count','value'  );     
-    });
+    }); */
 
-    this.apicharts.getMunicipalityLitersTotal().subscribe((res) => {
+   /*  this.apicharts.getMunicipalityLitersTotal().subscribe((res) => {
       console.log("litros municipo",res);
 
       this.chartData = res.paylad;
       this.municipalityTotalLitersRef.buildMunicipalityTotalLiters(
         res.payload,
-   /*      [{
-          "name": "Monica",
-          "steps": 140,         
-        },{
-          "name": "Joey",
-          "steps": 150,          
-      },{
-          "name": "Bety",
-          "steps": 130,          
-      },{
-        "name": "Jose",
-        "steps": 130,          
-      } */
        'municipality' , 'municipalityTotalLiters',
       
       );   
       console.log("litros municipo 2", res.payload);
-    });
-   
-
-
+    }); */
   
   }
 
+  getDaily(event: LazyLoadEvent){
+    console.log(event);
+    if(event)
+    {
+      
+      setTimeout(() => {
+        this.loadingTable = true;
+        this.apiTrip.getTotalDetailRegisters(event.first, event.rows, event.filters["collaborator.firstName"]?.value, event.filters["settlement.settlement"]?.value,event.filters["street"]?.value, event.filters["statuses.name"]?.value).subscribe(res => {
+          this.totalRecords=res.payload;
+        });
+        this.apiTrip.getAllDaily(event.first, event.rows, event.filters["collaborator.firstName"]?.value, event.filters["settlement.settlement"]?.value, event.filters["street"]?.value, event.filters["statuses.name"]?.value).subscribe(res => {
+          this.trips = res;
+          console.log( "viajes", res)
+          console.log("colabradorFiltro",event.filters["collaborator.firstName"]?.value)
+          console.log("vajes", this.trips)
+          this.loadingTable = false;
+        });
+      }, 1000);
+    }
+  }
+
+  cargar() {
+    this.getDaily(null);
+    this.cargando = true;
+  }
+
+  unassignTrip(tripsModel: tripsModel, i: number) {
+    Swal.fire({
+      icon: 'question',
+      title: '¿Está seguro que desea remover la pipa ?',
+      showDenyButton: true,
+      confirmButtonText: `Confirmar`,
+      denyButtonText: `Cancelar`,
+    } as SweetAlertOptions).then(resp => {
+      if (resp.value) {
+        this.newTrips.splice(i, 1);
+        this.apiTrip.unassignTrip(tripsModel.id, {}).subscribe();
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Pipa removida ",
+          showConfirmButton: false,
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+      }else if (resp.isDenied) {
+        Swal.fire("Pipa no removida", "", "info");
+      }
+    });
+  }
+
+ concludeTrip(tripsModel: tripsModel, i: number) {
+    Swal.fire({
+      icon: "question",
+      title: '¿Está seguro de finalizar el viaje?',
+      showDenyButton: true,
+      confirmButtonText: `Confirmar`,
+      denyButtonText: `Cancelar`,
+    } as SweetAlertOptions).then(result => {
+      if (result.isConfirmed) {
+        this.newTrips.splice(i, 1);
+        this.apiTrip.concludeTrip(tripsModel.id, {}).subscribe();
+        Swal.fire({
+          icon: 'success',
+          title: 'Viaje Finalizado',
+          showConfirmButton: false,
+          timer: 1300
+        })
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500); 
+      }else if (result.isDenied) {
+        Swal.fire("Viaje no terminado", "", "info");
+      }
+    });
+  }
+
+  delete(tripModel: tripsModel, i: number) {
+    Swal.fire({
+      title: `¿Está seguro que desea borrar el viaje?`,
+      icon: "question",
+      showDenyButton: true,
+      confirmButtonText: `Confirmar`,
+      denyButtonText: `Cancelar`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.trips.splice(i, 1);
+        this.apiTrip.deleteTrips(tripModel.id).subscribe((resp) => {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Pre-registro eliminado correctamente",
+            showConfirmButton: false,
+          });
+          setTimeout(() => {
+            window.location.reload();
+          }, 1300);
+        });
+      }else if (result.isDenied) {
+        Swal.fire("Pre-registro no eliminado", "", "info");
+      }
+    });
+  }
+  
   ngOnDestroy() {
 
+  }
+
+  next() {
+    this.first = this.first + this.rows;
+  }
+  prev() {
+    this.first = this.first - this.rows;
+  }
+  reset() {
+    this.first = 0;
+  }
+  isLastPage(): boolean {
+    return this.newTrips ? this.first === (this.newTrips.length - this.rows) : true;
+  }
+  isFirstPage(): boolean {
+    return this.newTrips ? this.first === 0 : true;
   }
 
 

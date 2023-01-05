@@ -1,16 +1,17 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse,HttpParams } from "@angular/common/http";
 import { environment } from "@environments/environment";
 import { Router } from "@angular/router";
 
 /*----MODELS--- */
-import { getRoles } from "../../../models/role/getRoles.module";
+
 import { roleModel } from "../../../models/role/roleModel.module";
 import { PermissionModel } from "../../../models/role/permissionModel.module";
 
-import { map } from "rxjs/operators";
+import { catchError, map, tap } from "rxjs/operators";
 import { NgxRolesService } from "ngx-permissions";
+import { Observable, throwError } from "rxjs";
 
 @Injectable({
   providedIn: "root",
@@ -22,7 +23,8 @@ export class ManageRolesService {
     private rs: NgxRolesService
   ) {}
 
-  createRole(role: roleModel) {
+   /*  FUNCION POST CreateRole */
+  CreateRole(role: roleModel) {
     return this.http.post(`${environment.apiUrl}role/create`, role).pipe(
       map((resp: any) => {
         role.id = resp.id;
@@ -30,67 +32,102 @@ export class ManageRolesService {
       })
     );
   }
+/*FUNCION PUT UpdateRole */
+  UpdateRole(hash: string, params: any) {
+    return this.http.put(`${environment.apiUrl}role/update/${hash}`, params);
+}
 
-  updateRole(role: roleModel) {
-    const roleTemp = {
-      ...role,
-    };
-    delete roleTemp.id;
-    return this.http.put(
-      `${environment.apiUrl}role/update/${role.id}`,
-      roleTemp
-    );
+/*  FUNCION GET GetAllRoles */
+GetAllRoles():Observable<any> {
+  return this.http.get<{payload: roleModel}>(`${environment.apiUrl}role/getAll`)
+  .pipe(tap(data=>{
+  
+    return data;
+   }),
+   catchError((err: HttpErrorResponse) => {
+    
+     return throwError(err);
+   }))
+}
+
+  GetAllRolesTable(offset, limit,role=null): Observable<any> {
+    // Initialize Params Object
+    let params = new HttpParams();
+
+    // Begin assigning parameters
+    params = params.append('offset', offset);
+    params = params.append('limit', limit);
+     if(role)
+     params = params.append('role', role);
+     return this.http.get<{payload: roleModel}>(`${environment.apiUrl}role/getAllTable`,{params})
+      .pipe(
+        tap((data) => {
+          return data;
+        }),
+        catchError((err: HttpErrorResponse) => {
+          return throwError(err);
+        })
+      );
+  }
+  getTotalRegisters(offset, limit,role=null)
+  {
+         // Initialize Params Object
+    let params = new HttpParams();
+
+    params = params.append('offset', offset);
+    params = params.append('limit', limit);
+     if(role)
+     params = params.append('role', role);
+    return this.http.get<{ payload: number }>(`${environment.apiUrl}role/getTotalCount`,{params})
+    .pipe(tap(data => {
+      return  data.payload;
+    }),
+      catchError((err: HttpErrorResponse) => {
+        return throwError(err);
+      }))
+  }
+  /*  FUNCION DELETE DeleteRole */
+  DeleteRole(hash: string) {
+    return this.http.delete(`${environment.apiUrl}role/delete/${hash}`);
   }
 
-  getAllRoles() {
-    return this.http
-      .get(`${environment.apiUrl}role/getAll`)
-      .pipe(map(this.createArrayRoles));
+ 
+   /* FUNCION GetIdRole */
+   GetIdRole(hash: string) {
+    return this.http.get<{payload: roleModel}>(`${environment.apiUrl}role/getById/${hash}`)
+      .pipe(map(res=> {
+        return res.payload;
+        
+      }));
+  }
+   
+   /* FUNCION GetIdRolePermission */
+   GetIdRolePermission(hash: string): Observable<any> {
+    return this.http.get<{payload:[]}>(`${environment.apiUrl}permission/getByRoleId/${hash}`)
+      .pipe(map(res=> {
+        return res.payload;
+        
+      }));
+  }
+  /* FUNCION GetIdRoleDetail */
+  GetIdRoleDetail(hash: string): Observable<any> {
+    return this.http.get<{payload:[]}>(`${environment.apiUrl}role/getById/${hash}/detail`)
+      .pipe(map(res=> {
+        return res.payload;
+        
+      }));
+  }
+/* FUNCION GET GetPermissions */
+GetPermissions(): Observable<any>{
+    return this.http.get<{payload:[]}>(`${environment.apiUrl}permission/getAll`).pipe(map(res=> {
+       
+        return res.payload;
+      }),
+      catchError((err: HttpErrorResponse) => {
+        
+        return throwError(err);
+      }));
+       
   }
 
-  deleteRole(id: string) {
-    return this.http.delete(`${environment.apiUrl}role/delete/${id}`);
-  }
-
-  getRole(id: string) {
-    return this.http
-      .get<roleModel>(`${environment.apiUrl}role/getById/${id}`)
-      .pipe(map(this.createArrayRole));
-  }
-
-  getPermissions() {
-    return this.http
-      .get(`${environment.apiUrl}permission/getAll`)
-      .pipe(map(this.createArrayPermissions));
-  }
-
-  private createArrayRoles(usersObj) {
-    const roles: getRoles[] = [];
-
-    Object.keys(usersObj).forEach((key) => {
-      const role: getRoles = usersObj[key];
-      role.id = key;
-      roles.push(role);
-    });
-    return roles;
-  }
-  private createArrayRole(usersObj) {
-    const roles: roleModel[] = [];
-
-    Object.keys(usersObj).forEach((key) => {
-      const role: roleModel = usersObj[key];
-      role.id = key;
-      roles.push(role);
-    });
-    return roles;
-  }
-  private createArrayPermissions(permissionsObj) {
-    const permissions: PermissionModel[] = [];
-    Object.keys(permissionsObj).forEach((key) => {
-      const permission: PermissionModel = permissionsObj[key];
-      permission.id = key;
-      permissions.push(permission);
-    });
-    return permissions;
-  }
 }

@@ -1,21 +1,97 @@
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 #chartdiv {
-  width: 100%;
-  height: 500px;
-}
-h4{
-  text-align: center;
-  padding: 15px;
+    width: 100%;
+    height: 500px;
 }
 
+h4 {
+    text-align: center;
+    padding: 15px;
+}
 
-.centrar {
-  width: 100%;
-  height: auto;
-  margin-left : auto;
-  margin-right: auto;
-  
+button {
+    height: 20px;
+    text-align: center;
+}
+
+h3,
+h5 {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    text-align: center;
+}
+
+th {
+    text-align: center;
+    align-items: center;
+    align-content: center !important;
+}
+
+#deleteColumn td {
+    text-align: center;
+}
+
+table>tbody>td.col-button {
+    text-align: center;
+}
+
+.col-button {
+    width: 10%;
+    text-align: center;
+}
+
+td.col-button {
+    text-align: center;
+}
+
+.my-center-text {
+    text-align: center;
+}
+
+button {
+    background: #A11F41;
+    border-radius: 5px;
+    color: white;
+}
+
+@media screen and (max-width: 40rem) {
+     :host ::ng-deep {
+        .p-datatable {
+            &.p-datatable-responsive-demo {
+                .p-datatable-thead>tr>th,
+                .p-datatable-tfoot>tr>td {
+                    display: none !important;
+                }
+                .p-datatable-tbody>tr>td {
+                    text-align: left;
+                    display: block;
+                    width: 100%;
+                    float: left;
+                    clear: left;
+                    border: 0 none;
+                    .p-column-title {
+                        padding: .4rem;
+                        min-width: 30%;
+                        display: inline-block;
+                        margin: -.4em 1em -.4em -.4rem;
+                        font-weight: bold;
+                    }
+                    &:last-child {
+                        border-bottom: 1px solid var(--surface-d);
+                    }
+                }
+            }
+        }
+    }
+}
+
+.cuadrado {
+    background-color: #A11F41;
+    border-radius: 5px;
+    width: 10%;
+    height: 5%;
 }

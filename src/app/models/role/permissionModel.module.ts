@@ -1,6 +1,6 @@
 
 export class PermissionModel {
-    id:string;
+    id:number;
     permission:string;
     description:string;
     status : boolean;

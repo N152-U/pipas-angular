@@ -1,109 +1,95 @@
 <div class="row">
-  <div class="col-sm-12"></div>
+    <div class="col-sm-12"></div>
 
-  <div class="row"></div>
+    <div class="row"></div>
 
-  <div class="col-sm-4"></div>
-  <div class="col-sm-4">
-    <div class="login-content">
-      <div class="pane pane-basic login-box divLogin">
-        <div class="pane-header">
-          <h2 class="title">Iniciar sesión</h2>
-        </div>
-        <form (ngSubmit)="onSubmit()" [formGroup]="aFormGroup">
-          <div class="form-group">
-            <label class="tittleLabel">Nombre de usuario:</label>
-            <input
-              name="username"
-              type="text"
-              class="form-control"
-              formControlName="username"
-              placeholder="Nombre de usuario"
-              required
-              [ngClass]="{
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4">
+        <div class="login-content">
+            <div class="pane pane-basic login-box">
+                <div class="pane-header">
+                    <h2 class="d-flex justify-content-center">Iniciar sesión</h2>
+                </div>
+                <form (ngSubmit)="onSubmit()" [formGroup]="aFormGroup">
+                    <div class="form-group">
+                        <label>Nombre de usuario:</label>
+                        <input name="username" type="text" class="form-control" formControlName="username" placeholder="Nombre de usuario" required [ngClass]="{
                 'is-invalid':
                   username.invalid &&
                   (username.dirty ||
                     username.touched ||
                     username.errors.minlength),
                 'is-valid': username.valid
-              }"
-            />
+              }" />
 
-            <div
-              *ngIf="username.invalid && (username.dirty || username.touched)"
-              class="invalid-feedback"
-            >
-              <div *ngIf="username.errors.required">
-                El campo es obligatorio
-              </div>
-              <div *ngIf="username.errors.minlength">
-                El usuario debe ser de al menos 2 caracteres
-              </div>
-            </div>
-          </div>
+                        <div *ngIf="username.invalid && (username.dirty || username.touched)" class="invalid-feedback">
+                            <div *ngIf="username.errors.required">
+                                El campo es obligatorio
+                            </div>
+                            <div *ngIf="username.errors.minlength">
+                                El usuario debe ser de al menos 2 caracteres
+                            </div>
+                        </div>
+                    </div>
 
-          <div class="form-group">
-            <label class="tittleLabel">Contraseña:</label>
-            <input
-              name="password"
-              type="password"
-              class="form-control"
-              formControlName="password"
-              placeholder="Ingresa tu contraseña"
-              required
-              [ngClass]="{
+
+                    <div class="form-group">
+                        <label>Contraseña*</label>
+                        <div class="input-group">
+                            <input [type]="fieldTextType ? 'text' : 'password'" class="form-control" placeholder="Contraseña" id="password" name="password" formControlName="password" [class]="{
+                                  'is-invalid':
+                                    password.invalid &&
+                                    (password.dirty ||
+                                      password.touched),
+                                  'is-valid': password.valid
+                                }" />
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                  <i
+                                    class="fa"
+                                    [ngClass]="{
+                                      'fa-eye-slash': !fieldTextType,
+                                      'fa-eye': fieldTextType
+                                    }"
+                                    (click)="toggleFieldTextType()"
+                                  ></i>
+                                </span>
+                            </div>
+
+                            <div *ngIf="password.invalid && (password.dirty || password.touched)" class="invalid-feedback">
+                                <div *ngIf="password.errors.required">
+                                    Contraseña obligatoria
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--  *ngIf="this.contador > 3" -->
+                    <div class="recaptcha2" *ngIf="this.contador > 3">
+                        <ngx-recaptcha2 #captchaElem [siteKey]="siteKey" formControlName="recaptcha" [ngClass]="{
                 'is-invalid':
-                  password.invalid && (password.dirty || password.touched),
-                'is-valid': password.valid
-              }"
-            />
-            <div
-              *ngIf="password.invalid && (password.dirty || password.touched)"
-              class="invalid-feedback"
-            >
-              <div *ngIf="password.errors.required">Contraseña obligatoria</div>
-            </div>
-          </div>
+                  recaptcha.invalid && (recaptcha.dirty || recaptcha.touched),
+                'is-valid': recaptcha.valid
+              }">
+                        </ngx-recaptcha2>
+                    </div>
 
-        <!--   <ngx-recaptcha2
-            #captchaElem
-            [siteKey]="siteKey"
-            formControlName="recaptcha"
-            [ngClass]="{
-              'is-invalid':
-                recaptcha.invalid && (recaptcha.dirty || recaptcha.touched),
-              'is-valid': recaptcha.valid
-            }"
-          >
-          </ngx-recaptcha2>
-          <div *ngIf="recaptcha.invalid" class="invalid-feedback">
-            <div *ngIf="recaptcha.errors.required">
-              El captcha es obligatorio
+                    <div *ngIf="recaptcha.invalid" class="invalid-feedback">
+                        <div *ngIf="recaptcha.errors.required">
+                            El captcha es obligatorio
+                        </div>
+                    </div>
+                    <br />
+                    <div class="d-flex justify-content-center">
+                        <button style="background-color: #A11F41; color: white;" class="btn btn-main  btn-group-justified" type="submit" [disabled]="!aFormGroup.valid">
+                            Entrar
+                        </button>
+                    </div>
+                </form>
             </div>
-          </div> -->
-
-          <!--   <div class="forgot">
-            <a
-              href="https://i4ch-capitalhumano.cdmx.gob.mx/servicio/olvido"
-              class="base-anchor"
-            >
-              Olvidé mi contraseña
-            </a>
-          </div> -->
-          <!-- <br /> -->
-          <div class="d-flex justify-content-center divButton">
-            <button
-              class="btn btn-main btn-success btn-group-justified btn-log"
-              type="submit"
-              [disabled]="!aFormGroup.valid"
-            >
-              Entrar
-            </button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="d-flex justify-content-center">
+            <div class="col-sm-4"> <b> {{appAlias}} v{{appVersion}}</b></div>
+        </div>
     </div>
-  </div>
-  <!-- <div class="col-sm-4"></div> -->
+
 </div>

@@ -6,6 +6,6 @@ export class UserModel {
   firstName: string;
   middleName: string;
   lastName: string;
-  status: boolean;
+  active: boolean;
   token: string;
  }

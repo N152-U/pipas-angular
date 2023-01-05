@@ -1,0 +1,207 @@
+<div style="background-color: rgb(255, 255, 255);" class="card centrar">
+    <h5>Todos los viajes</h5>
+
+    <div class="card-body">
+        <p-toolbar styleClass="p-mb-3">
+            <ng-template pTemplate="left">
+                <p-button [routerLink]="['home']" icon="pi pi-home" styleClass="p-button-sm p-button-raised" label="Inicio" [style]="{'margin-left': '.4em'}"></p-button>
+            </ng-template>
+            <ng-template pTemplate="right">
+                <p-button icon="pi pi-plus" styleClass="p-button-sm p-button-raised p-button-secondary" label="Pre-Registro" [style]="{'margin-left': '.4em'}" [routerLink]="['/trips/create']">
+                </p-button>
+            </ng-template>
+        </p-toolbar>
+        <p-table styleClass="p-datatable-sm p-datatable-striped p-datatable-responsive-demo p-datatable-gridlines" #dt1 [value]="newTrips" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} resultados"
+            [scrollable]="true" dataKey="id" scrollHeight="500px" [style]="{ width: '100%' }" [rowsPerPageOptions]="[2,10,25,50]" [lazy]="true" (onLazyLoad)="loadTrips($event)" totalRecords="{{totalRecords}}" [loading]="loadingTable">
+
+            <ng-template pTemplate="colgroup" let-columns>
+                <colgroup>
+                    <col style="width:120px">
+                    <col style="width:120px">
+                    <col style="width:190px">
+                    <col style="width:190px">
+                    <col style="width:190px">
+                    <col style="width:120px">
+                    <col style="width:190px">
+                    <col style="width:140px">
+                    <col style="width:130px">
+                    <col style="width:190px">
+                </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header" let-rowData="rowData">
+                <tr>
+                    <th style="text-align: center;" pSortableColumn="status.name">Eco
+                        <p-sortIcon></p-sortIcon>
+                    </th>
+                    <th style="text-align: center;" pSortableColumn="status.name">Capacidad
+                    </th>
+
+                    <th style="text-align: center;" pSortableColumn="street">Calle
+                        <p-sortIcon></p-sortIcon>
+                    </th>
+                    <th style="text-align: center;" pSortableColumn="settlement.settlement">Colonia
+                        <p-sortIcon></p-sortIcon>
+                    </th>
+                    <th style="text-align: center;" pSortableColumn="collaborator.firstName">Enlace
+                        <p-sortIcon></p-sortIcon>
+                    </th>
+                    <th style="text-align: center;" pSortableColumn="settlement">Ronda
+                    </th>
+                    <th style="text-align: center;" pSortableColumn="created_at">Fecha
+                        <p-sortIcon></p-sortIcon>
+                    </th>
+
+                    <th style="text-align: center;" pSortableColumn="eco">Estatus
+                        <p-sortIcon></p-sortIcon>
+                    </th>
+
+
+                    <th style="text-align: center;" pSortableColumn="folio2">Folios
+                        <p-sortIcon></p-sortIcon>
+                    </th>
+
+
+
+                    <th style="text-align: center;">Acciones</th>
+
+                </tr>
+
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th>
+                        <input pInputText type="text" (input)="dt1.filter($event.target.value, 'street', 'contains')" [value]="dt1.filters['street']?.value" placeholder="Busqueda por calle" class="p-column-filter p-inputtext-sm">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="dt1.filter($event.target.value, 'settlement.settlement', 'contains')" [value]="dt1.filters['settlement.settlement']?.value" placeholder="Busqueda por colonia" class="p-column-filter p-inputtext-sm">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="dt1.filter($event.target.value, 'collaborator.firstName', 'contains')" [value]="dt1.filters['collaborator.firstName']?.value" placeholder="Busqueda por enlace" class="p-column-filter p-inputtext-sm">
+                    </th>
+                    <th></th>
+                    <th>
+                        <input pInputText type="text" (input)="dt1.filter($event.target.value, 'created_at', 'contains')" [value]="dt1.filters['created_at']?.value" placeholder="Busqueda por fecha" class="p-column-filter p-inputtext-sm">
+                    </th>
+                    <th>
+                        <p-dropdown [options]="statuses" [style]="{'width':'100%'}" appendTo="body" (onChange)="dt1.filter($event.value, 'statuses.name', 'contains')" optionLabel="name" [filter]="true" [showClear]="true" placeholder="Selecciona un estado">
+
+
+                            <ng-template let-status pTemplate="item">
+
+                                <div class="status-item">
+                                    <div>{{ status.name }}</div>
+                                </div>
+                            </ng-template>
+                        </p-dropdown>
+                    </th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-trip>
+                <tr [pSelectableRow]="trip">
+                    <td style="text-align: center;">
+                        <div *ngIf="trip.driver != null">
+                            {{trip.driver.drivers_has_vehicle.vehicles.eco}}
+                        </div>
+                        <div *ngIf="trip.driver == null">
+                            Sin asignacion
+                        </div>
+                    </td>
+                    <td style="text-align: center;">
+                        <div *ngIf="trip.driver != null">
+                            {{trip.driver.drivers_has_vehicle.vehicles.capacity.name}} L
+                        </div>
+                    </td>
+                    <td>{{trip.street}}</td>
+                    <td>{{trip.settlement.settlement }}</td>
+                    <td>{{trip?.collaborator.firstName }}</td>
+                    <td style="text-align: center;">
+                        <div *ngIf="trip.round != null">
+                            {{trip.round}}
+                        </div>
+                    </td>
+                    <td style="text-align: center;">
+                        {{trip.created_at}}
+                    </td>
+                    <td style="text-align: center;">
+                        <div *ngIf="trip.status.id == 1">
+                            <span style="color: white;" class="badge {{ trip.status.id == 1 ? 'bg-primary' : 'bg-info' }}">{{ trip.status.id == 1 ? "Pendiente asignación" : "" }}</span>
+                        </div>
+                        <div style="color: white;" *ngIf="trip.status.id == 2">
+                            <span class="badge {{ trip.status.id == 2 ? 'bg-warning' : 'bg-info' }}">{{ trip.status.id == 2 ? "Asignado" : "" }}</span>
+                        </div>
+                        <div style="color: white;" *ngIf="trip.status.id == 3">
+                            <span class="badge {{ trip.status.id == 3 ? 'bg-danger' : 'bg-info' }}">{{ trip.status.id == 3 ? "Concluido" : "" }}</span>
+                        </div>
+                    </td>
+                    <td style="text-align: center;">
+
+                        <div *ngFor="let item of trip.folios">
+
+                            <div *ngIf="item[0] != null">
+                                {{item[0]?.folio }} <span *ngIf="item[1] != null">, {{item[1]?.folio }}</span>
+                                <p-divider></p-divider>
+                            </div>
+
+                        </div>
+
+                    </td>
+
+
+
+
+                    <td style="text-align: center;">
+                        <div style="padding: 1%;">
+                            <button *ngIf="trip.statusId === 1" pButton pRipple class=" p-mr-2 p-button-danger p-button-sm" (click)="delete(trip, i)" style="background-color: #CC3A2F; border-color:#CC3A2F; font-size: 12px;"> Eliminar</button>
+                        </div>
+
+                        <div style="padding: 1%;">
+                            <button *ngIf="trip.statusId === 1" pButton pRipple class="p-button-sm p-button-warning p-mr-2 p-button-sm" [routerLink]="['/trips/edit', trip.id]" style="background-color: #FAD250; border-color:#FAD250; font-size: 12px;"> Editar</button>
+                        </div>
+
+                        <div style="padding: 1%;">
+                            <button *ngIf="trip.statusId === 1" pButton pRipple class="p-button-sm  p-button-help p-mr-1 p-button-sm" [routerLink]="['/trips/associate', trip.id]" style="background-color: #A263B0; border-color:#A263B0; font-size: 12px;">Asignar pipa</button>
+                        </div>
+
+                        <div style="padding: 1%;">
+                            <button *ngIf=" trip.folios?.length  === 1 && trip.statusId === 2" pButton pRipple class="p-button-sm p-button-danger p-mr-1 p-button-sm" style="background-color: #CC3A2F; border-color:#CC3A2F; font-size: 12px;" (click)="unassignTrip(trip, id)">Quitar pipa</button>
+                        </div>
+
+                        <div style="padding: 1%;">
+                            <button *ngIf="trip.statusId === 2" pButton pRipple class="p-button-sm p-button p-mr-1 p-button-sm" style=" text-align: center; background-color: #439EFA; border-color:#439EFA; font-size: 12px;" [routerLink]="['/trips/folios', trip.id]">Nuevo Viaje</button>
+                        </div>
+
+                        <div style="padding: 1%;">
+                            <button *ngIf="trip.statusId === 2" pButton pRipple class="p-button-sm p-button-secondary p-mr-1 p-button-sm" style="background-color: #FAD250; border-color:#FAD250; text-align: center; font-size: 12px;" (click)="concludeTrip(trip, i)"> Concluido</button>
+                        </div>
+
+                        <div style="padding: 1%;">
+                            <button *ngIf="trip.statusId === 2" pButton pRipple class="p-button-sm p-button-secondary p-mr-1 p-button-sm " [routerLink]="['/trips/detail', trip.id]" style="background-color: #6e8a87; border-color:#6e8a87; text-align: center; font-size: 12px;">Detalle</button>
+                        </div>
+
+                        <div style="padding: 1%;">
+                            <button *ngIf="trip.statusId === 3" pButton pRipple class="p-button-sm p-button-secondary p-mr-1 p-button-sm " [routerLink]="['/trips/detail', trip.id]" style="background-color: #6e8a87; border-color:#6e8a87; text-align: center; font-size: 12px;">Detalle</button>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td [attr.colspan]="11">
+                        No se encontraron registros.
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="paginatorleft">
+            </ng-template>
+            <ng-template pTemplate="paginatorright">
+            </ng-template>
+            <ng-template pTemplate="footer">
+                <tr>
+                    <td colspan="11" class="p-text-right"></td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>

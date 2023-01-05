@@ -1,78 +1,91 @@
-<router-outlet></router-outlet>
+<router-outlet>
+</router-outlet>
+
 
 <div *ngIf="router.url == '/managment/manage-roles'">
-  <div class="card centrar">
-    <header>
-      <h1 class="text-center text-black">Administración de roles</h1>
-    </header>
-    <p-toolbar styleClass="p-mb-4">
-      <ng-template pTemplate="left">
-        <p-button styleClass="p-button-sm p-button-success" label="Nuevo Registro" icon="pi pi-plus"
-          [routerLink]="['new-role']"></p-button>
-      </ng-template>
-      <ng-template pTemplate="right">
-        <p-button styleClass="p-button-sm" label="Inicio" [routerLink]="['home']"></p-button>
-      </ng-template>
-    </p-toolbar>
-    <br />
-    <p-table styleClass="p-datatable-sm p-datatable-striped p-datatable-responsive-demo" #dt1 [value]="roles[0]"
-      [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
-      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [scrollable]="true" dataKey="id"
-      scrollHeight="500px" [style]="{ width: '100%' }" [rowsPerPageOptions]="[5, 10, 25, 50]">
+    <div class="card centrar">
+        <header>
+            <h1 class="text-center text-black">Administraci&oacute;n de roles</h1>
+        </header>
+        <p-toolbar styleClass="p-mb-4">
 
-      <ng-template pTemplate="header" let-rowData="rowData">
-        <tr>
-          <th pSortableColumn="role">Role <p-sortIcon></p-sortIcon>
-          </th>
-          <th>Status</th>
+            <!--    <ng-template  [ngxPermissionsOnly]="['CREATE.ROLE']">  -->
 
-          <th>Acciones</th>
-        </tr>
-        <tr>
-          <th>
-            <input pInputText type="text" (input)="dt1.filter($event.target.value, 'role', 'contains')"
-              [value]="dt1.filters['role']?.value" placeholder="Busqueda por role"
-              class="p-column-filter p-inputtext-sm" />
-          </th>
-          <th></th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-role>
-        <tr [pSelectableRow]="role">
-          <td>{{ role.role }}</td>
-          <td>
-            <span
-              class="badge {{ role.status == 1 ? 'bg-success' : 'bg-warning' }}">{{ role.status == 1 ? "ACTIVO" : "BLOQUEADO" }}</span>
-          </td>
+            <p-button styleClass="p-button-sm p-button-success" label="Nuevo Registro" icon="pi pi-plus" [routerLink]="['new-role']"></p-button>
+            <!--      </ng-template> -->
 
-          <td>
-            <button class="btn btn-primary btnEditar" [routerLink]="['edit-role', role.id]">
-              <i class="fa fa-pen"></i>
-            </button>
-            &nbsp;
-            <button class="btn btn-danger" (click)="deleteRole(role, i)">
-              <i class="fa fa-trash"></i>
-            </button>
-          </td>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="paginatorleft"> </ng-template>
-      <ng-template pTemplate="paginatorright"> </ng-template>
-    </p-table>
-  </div>
+            <ng-template pTemplate="right">
+                <p-button styleClass="p-button-sm" label="Inicio" [routerLink]="['home']"></p-button>
+            </ng-template>
+        </p-toolbar>
+        <br />
+        <p-table styleClass="p-datatable-sm p-datatable-striped p-datatable-responsive-demo" #dt1 [value]="roles" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" currentPageReportTemplate="Registros del {first} al {last} de {totalRecords} Registros"
+            [scrollable]="true" dataKey="id" scrollHeight="500px" [style]="{ width: '100%' }" [rowsPerPageOptions]="[5, 10]" [lazy]="true" (onLazyLoad)="loadRoles($event)" [loading]="loadingTable" totalRecords="{{totalRecords}}">
+            <ng-template pTemplate="header" let-rowData="rowData">
+                <tr>
+                    <th pSortableColumn="role">Roles</th>
+                    <th>Estatus</th>
+                    <th>Acciones</th>
+                </tr>
+                <tr>
+                    <th>
+                        <input pInputText type="text" (input)="dt1.filter($event.target.value, 'role', 'contains')" [value]="$any(dt1.filters['role'])?.value" placeholder="Busqueda por role" class="p-column-filter p-inputtext-sm" />
+                    </th>
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-role let-i>
+                <tr [pSelectableRow]="role">
+                    <td>{{ role.role }}</td>
+                    <td>
+                        <span class="badge {{
+                    role.active == 1 ? 'bg-success' : 'bg-warning'
+                  }}">{{ role.active == 1 ? "ACTIVO" : "BLOQUEADO" }}</span
+                >
+              </td>
 
-  <div *ngIf="!cargando && roles.length === 0" class="alert alert-warning text-center mt-3 animated fadeIn faster">
-    <h4 class="alert-heading">No hay registros</h4>
-    <p>
-      <i class="fa fa-exclamation fa-2x"></i>
-    </p>
-  </div>
+              <td>
+               <!--  <ng-template [ngxPermissionsOnly]="['UPDATE.ROLE']" > --> 
+                  <button
+                  class="btn btn-primary btnEditar"
+                  [routerLink]="['edit-role', role.hash]"
+                >
+                  <i class="fa fa-pen"></i>
+                </button>
+            <!--     </ng-template> -->
+        
+                &nbsp;
+             
+               <!--  <ng-template [ngxPermissionsOnly]="['DELETE.ROLE']" >  -->
+                  <button class="btn btn-danger" (click)="deleteRole(role, i)">
+                    <i class="fa fa-trash"></i>
+                  </button>
+             <!--    </ng-template> -->
+                &nbsp;
+               <!--  <ng-template [ngxPermissionsOnly]="['READ.ROLE']"> -->
+                  <button class="btn btn-secondary"
+                  [routerLink]="['detail-role', role.hash]">
+                    <i class="fa fa-eye"></i>
+                  </button>
+            <!--     </ng-template> -->
+          
+              </td>  
+            
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="paginatorleft"> </ng-template>
+          <ng-template pTemplate="paginatorright"> </ng-template>
+        </p-table>
+      </div>
 
-  <div *ngIf="cargando" class="alert alert-info text-center mt-3 animated fadeIn faster">
-    <h4 class="alert-heading">Cargando</h4>
-    <p>
-      <i class="fa fa-sync-alt fa-spin fa-2x"></i>
-    </p>
-    <p class="mb-0">Espere por favor</p>
-  </div>
-</div>
+      <div
+        *ngIf="!cargando && roles.length === 0"
+        class="alert alert-warning text-center mt-3 animated fadeIn faster"
+      >
+        <h4 class="alert-heading">No hay registros</h4>
+        <p>
+          <i class="fa fa-exclamation fa-2x"></i>
+        </p>
+      </div>
+
+    </div>

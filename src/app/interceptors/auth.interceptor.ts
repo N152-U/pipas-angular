@@ -11,7 +11,7 @@ import { catchError, delay, finalize } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { AuthService } from '../services/auth/auth.service';
-import { RequestsPendingService } from '../services/requests/requests.service';
+import { RequestsPendingService } from '../services/requests/requests-pending.service';
 
 @Injectable({
   providedIn: 'root',
@@ -34,7 +34,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
     this.reqpendingservice.notify(this.pendingRequestsCount);
     //Exceptuamos el servidor 10.11.11.25, ya que al modificar la peticion se hace un preflight y no se cuenta con CORS en ese servidor
- /*    if (this.auth.isAuth() && token && req.url.substring(7, 18) != '10.11.11.25' && req.url.substring(7, 19) != '10.11.11.115' ) { */
+    if ( token && req.url.substring(7, 18) != '10.11.11.25' && req.url.substring(7, 19) != '10.11.11.115' && req.url.substring(7, 19) != '10.11.11.245' ) {
 
       request = req.clone({
         setHeaders: {
@@ -52,17 +52,16 @@ export class AuthInterceptor implements HttpInterceptor {
       }); */
 
 
-  /*   }else if(!token) {
+    }else if(!token) {
       this.pendingRequestsCount=0;
-    } */
+    }
 
 
     return next.handle(request).pipe(
 
       finalize(() => {
         if(token && this.pendingRequestsCount>0)this.pendingRequestsCount--;
-        if(isDevMode())
-        {console.log('peticiones pendientes (finalize)',this.pendingRequestsCount);}
+        if(isDevMode())console.log('peticiones pendientes (finalize)',this.pendingRequestsCount);
 
         if ((this.pendingRequestsCount == 0)) {
           this.reqpendingservice.notify(this.pendingRequestsCount);

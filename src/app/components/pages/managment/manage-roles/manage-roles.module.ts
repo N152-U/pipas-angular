@@ -38,17 +38,19 @@ import { MenuModule } from "primeng/menu";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { CardModule } from "primeng/card";
 import { CommonModule } from "@angular/common";
-
+import { NgxPermissionsModule } from "ngx-permissions";
+import { DetailRoleComponent } from "./detail-role/detail-role.component";
 
 @NgModule({
-  declarations: [ManageRolesComponent, NewRoleComponent, EditRoleComponent],
+  declarations: [
+    ManageRolesComponent,
+    NewRoleComponent,
+    EditRoleComponent,
+    DetailRoleComponent,
+  ],
   imports: [
     CommonModule,
-
-    //Ruteo
     ManageRolesRoutingModule,
-    
-
     CardModule,
     FormsModule,
     ReactiveFormsModule,
@@ -79,6 +81,8 @@ import { CommonModule } from "@angular/common";
     MenuModule,
     FileUploadModule,
     RatingModule,
+    NgxPermissionsModule.forChild(),
   ],
+  exports: [NgxPermissionsModule],
 })
 export class ManageRolesModule {}

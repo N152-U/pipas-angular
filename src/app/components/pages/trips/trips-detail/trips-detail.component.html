@@ -1,0 +1,146 @@
+<div class="border">
+<p-button [routerLink]="['/home']" label="Regresar" icon="pi pi-arrow-left" styleClass="p-button-sm p-button-danger" [style]="{'margin-left': '.4em'}"></p-button>
+    <div class="row">
+        <div class="col-sm-4 col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 style="text-align: center;" class="card-title">Datos del Enlace</h5>
+                    <ul class="cuadrado">
+                        <li style="font-weight: bold">Nombre(s):</li>
+                        <div style="padding-left: 5%; ">{{detailTrip.collaborator.firstName}}</div>
+                        <li style="font-weight: bold">Apellido Paterno:</li>
+                        <div style="padding-left: 5%;"> {{detailTrip.collaborator.maternalSurname}}</div>
+                        <li style="font-weight: bold">Apellido Materno:</li>
+                        <div style="padding-left: 5%;"> {{detailTrip.collaborator.paternalSurname}}</div>
+                        <li style="font-weight: bold">Telefono:</li>
+                        <div style="padding-left: 5%;"> {{detailTrip.collaborator.phoneNumber}}</div>
+                        <li style="font-weight: bold">Colonia:</li>
+                        <div style="padding-left: 5%;"> {{detailTrip.settlement.settlement}}</div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4 col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 style="text-align: center;" class="card-title">Datos del Pipero</h5>
+                    <ul class="cuadrado">
+                        <li style="font-weight: bold">Nombre(s):</li>
+                        <div style="padding-left: 5%; " *ngIf="detailTrip.driver != null"> {{detailTrip.driver.firstName}}</div>
+                        <li style="font-weight: bold" >Apellido Paterno:</li>
+                        <div style="padding-left: 5%;" *ngIf="detailTrip.driver != null">{{detailTrip.driver.paternalSurname}}</div>
+                        <li style="font-weight: bold">Apellido Materno:</li>
+                        <div style="padding-left: 5%;" *ngIf="detailTrip.driver != null">{{detailTrip.driver.maternalSurname}}</div>
+                        <li style="font-weight: bold">Telefono:</li>
+                        <div style="padding-left: 5%;" *ngIf="detailTrip.driver != null"> {{detailTrip.driver.phoneNumber}}</div>
+                        <br>
+                        <br>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4  col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 style="text-align: center;" class="card-title">Datos de la Pipa</h5>
+                    <ul class="cuadrado">
+                        <li style="font-weight: bold">N. Eco:</li>
+                        <div style="padding-left: 5%;" *ngIf="detailTrip.driver != null"> {{detailTrip.driver.drivers_has_vehicle.vehicles.eco}}</div>
+                        <li style="font-weight: bold">Capacidad:</li>
+                        <div style="padding-left: 5%;" *ngIf="detailTrip.driver != null"> {{detailTrip.driver.drivers_has_vehicle.vehicles.capacity.name}} L</div>
+                        <li style="font-weight: bold">Placa:</li>
+                        <div style="padding-left: 5%;" *ngIf="detailTrip.driver != null"> {{detailTrip.driver.drivers_has_vehicle.vehicles.placa}}</div>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-9">
+            <div class="card">
+                <div class="card-body">
+                    <br>
+                    <h5 style="text-align: center;" class="card-title">Datos de la Generales</h5>
+                    <!-- <ul class="cuadrado">
+                        <li style="font-weight: bold">Calle:</li>
+                        <div style="padding-left: 2%; ">{{detailTrip.street}}</div>
+                        <li style="font-weight: bold">Folios:</li>
+                        <div style="padding-left: 2%;">
+                            <table>
+                                <tr>
+                                    <td>Folio 1</td>
+                                    <td>Folio 2</td>
+                                </tr>
+                                <tr *ngFor="let item of detailTrip.folios">
+                                    <td>
+                                        {{item.folio}}
+                                    </td>
+                                    <td>
+                                        {{item.folio2}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <li style="font-weight: bold">Estatus:</li>
+                        <div style="padding-left: 2%; ">{{detailTrip.status.name}}</div>
+                    </ul> -->
+                    <div class="row">
+                        <div class="col">
+                            <ul class="cuadrado">
+                                <li style="font-weight: bold">Calle:</li>
+                                <div style="padding-left: 2%; ">{{detailTrip.street}}</div>
+                                <li style="font-weight: bold">Estatus:</li>
+                                <div>{{detailTrip.status.name}}</div>
+                            </ul>
+                        </div>
+                        <div class="col">
+                            <ul class="cuadrado">
+                                <li style="font-weight: bold">Folios:</li>
+                                <br>
+                                <div>
+                                    <table>
+                                        <tr>
+                                            <td colspan="2" style="width: 0.3%; text-align: center;">Folios principales </td>
+                                            <td  colspan="2" style="width: 0.3%; text-align: center;">Folios complementarios</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="1" style="width: 0.3%; text-align: center;">No. </td>
+                                            <td  colspan="1" style="width: 0.3%; text-align: center;">Tipo de folio</td>
+                                            <td colspan="1" style="width: 0.3%; text-align: center;">No. </td>
+                                            <td  colspan="1" style="width: 0.3%; text-align: center;">Tipo de folio</td>
+                                        </tr>
+                                        <tr *ngFor="let item of detailTrip.folios">
+                                            <td>
+                                                {{item[0]?.folio}}
+                                            </td>
+                                            <td>
+                                                {{item[0]?.folioType==2?'20,000':item[0]?.folioType?'10,000':''}}
+                                            </td>
+                                            <td>
+                                                {{item[1]?.folio}}
+                                            </td>
+                                           
+                                            <td>
+                                                <!--Unicamente el complemento puede ser de 10000-->
+                                                {{item[1]?.folioType==2?'20,000':item[1]?.folioType?'10,000':''}}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4 col-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    <img alt="Card" src="assets/images/86769.png" class="responsive">
+                </div>
+        </div>
+    </div>
+</div>

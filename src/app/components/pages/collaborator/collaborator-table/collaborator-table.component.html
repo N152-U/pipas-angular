@@ -1,0 +1,68 @@
+<div class="card centrar">
+    <h5>Colaboradores</h5>
+    <div class="card-body">
+        <p-toolbar styleClass="p-mb-4">
+            <ng-template pTemplate="left">
+
+                <p-button [routerLink]="['home']" icon="pi pi-home" styleClass="p-button-sm p-button-raised" label="Inicio" [style]="{'margin-left': '.4em'}"></p-button>
+            </ng-template>
+            <ng-template pTemplate="right">
+                <p-button [routerLink]="['/enlace/create']" icon="pi pi-plus" styleClass="p-button-sm p-button-raised p-button-secondary" label="Nuevo Registro" [style]="{'margin-left': '.4em'}"></p-button>
+            </ng-template>
+        </p-toolbar>
+
+        <p-table styleClass="p-datatable-sm p-datatable-responsive-demo p-datatable-gridlines" #dt1 [value]="collaboratorDate" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} resultados"
+            [scrollable]="true" dataKey="id" scrollHeight="500px" [style]="{ width: '100%' }" [rowsPerPageOptions]="[5,10]" [loading]="loadingTable">
+            <ng-template pTemplate="colgroup" let-columns>
+                <colgroup>
+                    <col style="width:30%">
+                    <col style="width:30%">
+                    <col style="width:20%">
+                    <col style="width:20%">
+                </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header" let-rowData="rowData">
+                <tr>
+                    <th style="text-align: center;" pSortableColumn="firstName">Nombre(s)
+                        <p-sortIcon></p-sortIcon>
+                    </th>
+                    <th style="text-align: center;" pSortableColumn="settlement">Colonia
+                        <p-sortIcon></p-sortIcon>
+                    </th>
+                    <th style="text-align: center;" pSortableColumn="phoneNumber">Telefono
+                        <p-sortIcon></p-sortIcon>
+                    </th>
+                    <th style="text-align: center;">Acciones</th>
+                </tr>
+
+                <tr>
+                    <th>
+                        <input pInputText type="text" (input)="dt1.filter($event.target.value, 'firstName', 'contains')" [value]="dt1.filters['firstName']?.value" placeholder="Busqueda por nombre" class="p-column-filter p-inputtext-sm">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="dt1.filter($event.target.value, 'settlements', 'contains')" [value]="dt1.filters['settlements']?.value" placeholder="Busqueda por Colonia" class="p-column-filter p-inputtext-sm">
+                    </th>
+                    <th>
+                        <input pInputText type="text" (input)="dt1.filter($event.target.value, 'phoneNumber', 'contains')" [value]="dt1.filters['phoneNumber']?.value" placeholder="Busqueda por Telefono" class="p-column-filter p-inputtext-sm">
+                    </th>
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-enlace>
+                <tr [pSelectableRow]="enlace">
+                    <td>{{enlace.firstName }}</td>
+                    <td>{{enlace.settlements }}</td>
+                    <td>{{enlace.phoneNumber }}</td>
+                    <td style="text-align: center;">
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-warning p-mr-2" [routerLink]="['/enlace/edit', enlace.id]"></button> &nbsp;
+                        <button style="align-items: center; text-align: center;" pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger  p-mr-2" (click)="deleteCollaborator(enlace, i)"></button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="paginatorleft">
+            </ng-template>
+            <ng-template pTemplate="paginatorright">
+            </ng-template>
+        </p-table>
+    </div>
+</div>
